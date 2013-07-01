@@ -155,32 +155,25 @@ function encode($val, $type) {
 }
 
 function preset($name) {
+    write-host "name: $name" -f red; exit
     $presets = "$($myinvocation.psscriptroot)\presets";
-    if(!$name.endswith('.json')) { $name += '.json' }
+    if(!$name.endswith('.json')) { $name = "$name.json" }
     $path = "$presets\$name"
-    if((test-path $path)) { 
-        #gc $path -raw
-    }
+    write-host "path: '$path', $($path.gettype())"; exit 1;
+    if(test-path $path) { gc $path -raw }
 }
 
 function text($src) {
     # url
-    #if($src -match '^https?://') { return (new-object net.webclient).downloadstring($src) }
-
-    # path
-    if(test-path $src) { 
-        $text = gc "$(resolve-path $src)" -raw
-        write-host "gc $src -raw:`n $text" -f red; exit
-    }
-
-    # try preset
-    preset $src
+    if($src -match '^https?://') { return (new-object net.webclient).downloadstring($src) }
+    if(test-path $src) { write-host "here"; (gc $src -raw) }
+    else { write-host "there"; $null }
+    
 }
 
 function import($src) {
     if(!$src) { "ERROR: source missing"; $usage; exit 1 }
     $settings = text $src
-    write-host "$settings"; exit 1
 
     if(!$settings) { "ERROR: couldn't load settings from $src"; exit 1 }
 
