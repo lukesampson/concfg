@@ -1,0 +1,690 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"help",
+				"help_lines"
+			],
+			[
+				"my",
+				"myinvocation"
+			],
+			[
+				"app",
+				"appdata"
+			],
+			[
+				"margin",
+				"margin-left"
+			],
+			[
+				"time",
+				"time_ago_in_words_with_parsing"
+			],
+			[
+				"l",
+				"offpeak_limit"
+			],
+			[
+				"limi",
+				"normal_limit"
+			],
+			[
+				"border-radius",
+				"border-top-right-radius"
+			],
+			[
+				"yer",
+				"yesterday_stat"
+			],
+			[
+				"last",
+				"last_update"
+			],
+			[
+				"perio",
+				"period_end"
+			],
+			[
+				"peak",
+				"peak_quota"
+			],
+			[
+				"offpeak",
+				"offpeak_quota"
+			],
+			[
+				"max",
+				"max_keys"
+			],
+			[
+				"test",
+				"textStatus"
+			],
+			[
+				"queu",
+				"queueAlbum"
+			],
+			[
+				"is",
+				"isFirstAlbum"
+			],
+			[
+				"isF",
+				"isFirstTrack"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "concfg.sublime-project",
+			"settings":
+			{
+				"buffer_size": 208,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 6 files for \"purple\" (case sensitive)\n\n/Volumes/C/Users/luke/projects/concfg/concfg.ps1:\n    9  #     http://sourcewarp.blogspot.com.au/2012/06/windows-powershell-shortcut-ishelllink.html\n   10  \n   11: $colors = 'black,dark_blue,dark_green,dark_cyan,dark_red,dark_purple,dark_yellow,gray,dark_gray,blue,green,cyan,red,purple,yellow,white'.split(',')\n   12  \n   13  $map = @{\n\n/Volumes/C/Users/luke/projects/concfg/presets/default.json:\n    5      \"dark_cyan\":   \"#008080\",\n    6      \"dark_red\":    \"#800000\",\n    7:     \"dark_purple\": \"#800080\",\n    8      \"dark_yellow\": \"#808000\",\n    9      \"gray\":        \"#c0c0c0\",\n   ..\n   18  \n   19      \"screen_colors\": \"gray,black\",\n   20:     \"popup_colors\":  \"dark_purple,white\",\n   21  \n   22      \"font_face\":   \"\",\n\n/Volumes/C/Users/luke/projects/concfg/presets/solarized.json:\n    5      \"dark_aqua\":   \"#2aa198\",\n    6      \"dark_red\":    \"#dc322f\",\n    7:     \"dark_purple\": \"#d33682\",\n    8      \"dark_yellow\": \"#b58900\",\n    9      \"gray\":        \"#eee8d5\",\n   ..\n   13      \"cyan\":        \"#93a1a1\",\n   14      \"red\":         \"#cb4b16\",\n   15:     \"purple\":      \"#6c71c4\",\n   16      \"yellow\":      \"#657b83\",\n   17      \"white\":       \"#fdf6e3\",\n\n6 matches across 3 files\n",
+			"settings":
+			{
+				"buffer_size": 1240,
+				"line_ending": "Windows",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "presets/sensible.json",
+			"settings":
+			{
+				"buffer_size": 408,
+				"line_ending": "Windows",
+				"name": "{"
+			}
+		},
+		{
+			"file": "presets/default.json",
+			"settings":
+			{
+				"buffer_size": 969,
+				"line_ending": "CR"
+			}
+		},
+		{
+			"file": "presets/solarized.json",
+			"settings":
+			{
+				"buffer_size": 576,
+				"line_ending": "CR"
+			}
+		},
+		{
+			"contents": "param($cmd)\n\n$usage = \"usage:\n    concfg import <preset>|<path>|<url>\n    concfg export <path>\n    concfg clean\"\n\n# registry reference:\n#     http://technet.microsoft.com/en-us/library/cc978570.aspx\n#\n# setting NT_CONSOLE_PROPS (not implemented):\n#     http://sourcewarp.blogspot.com.au/2012/06/windows-powershell-shortcut-ishelllink.html\n\n$colors = 'black,dark_blue,dark_green,dark_cyan,dark_red,dark_magenta,dark_yellow,gray,dark_gray,blue,green,cyan,red,magenta,yellow,white'.split(',')\n\n$map = @{\n    'FontFamily'=@('font_true_type', 'font_type')\n    'FaceName'=@('font_face', 'string')\n    'FontSize'=@('font_size', 'dim')\n    'FontWeight'=@('font_weight','int')\n    'CursorSize'=@('cursor_size','cursor')\n    'QuickEdit'=@('quick_edit', 'bool')\n    'ScreenBufferSize'=@('screen_buffer_size', 'dim')\n    'WindowSize'=@('window_size', 'dim')\n    'PopupColors'=@('popup_colors', 'fg_bg')\n    'ScreenColors'=@('screen_colors', 'fg_bg')\n    'FullScreen'=@('fullscreen','bool')\n    'HistoryBufferSize'=@('command_history_length','int')\n    'NumberOfHistoryBuffers'=@('num_history_buffers','int')\n    'InsertMode'=@('insert_mode','bool')\n    'LoadConIme'=@('load_console_IME','bool')\n}\nfor($i=0;$i -lt $colors.length;$i++) {\n    $map.add(\"ColorTable$($i.tostring('00'))\", @($colors[$i],'color'))\n}\n$reverse_map = @{}\nforeach($key in $map.keys) {\n    $name,$type = $map[$key]\n    $reverse_map.add($name, @($key,$type))\n}\n\nfunction export {\n    $props = @{}\n    (gp hkcu:\\console).psobject.properties | sort name |% {\n        $name,$type = $map[$_.name]\n        if($name) {\n            $props.add($name, (decode $_.value $type))\n        }\n    }\n\n    $props | convertto-json\n}\n\nfunction import($json) {\n    $props = $json | convertfrom-json\n\n    # encode everything first before setting registry values, in case\n    # anything goes wrong\n    $encoded = @{}\n\n    $props.psobject.properties | % {\n        $key,$type = $reverse_map[$_.name]\n        $val = $_.value\n        if($key) { $encoded[$key] = (encode $val $type) }\n    }\n\n    $encoded.keys | % { \n        sp hkcu:\\console $_ $encoded[$_]\n    }\n}\n\nfunction decode($val, $type) {\n    switch($type) {\n        'bool' { [bool]$val }\n        'color' {\n            $bytes = [bitconverter]::getbytes($val)\n            [array]::reverse($bytes)\n            $int = [bitconverter]::toint32($bytes, 0)\n\n            '#' + $int.tostring('x8').substring(0,6)\n        }\n        'cursor' {\n            switch($val) {\n                0x19 { 'small' }\n                0x32 { 'medium' }\n                0x64 { 'large' }\n            }\n        }\n        'fg_bg' {\n            $hex = $val.tostring('x2')\n            $bg_i = [convert]::toint32($hex[0],16)\n            $fg_i = [convert]::toint32($hex[1],16)\n            $bg = $colors[$bg_i]\n            $fg = $colors[$fg_i]\n            \"$fg,$bg\"\n        }\n        'font_type' { }\n        'int' { $val }\n        'string' { $val }\n        'dim' {\n            $bytes = [bitconverter]::getbytes($val)\n            $width = [bitconverter]::toint16($bytes[0..2], 0)\n            $height = [bitconverter]::toint16($bytes, 2)\n            \"$($width)x$($height)\"\n        }\n    }\n}\n\nfunction encode($val, $type) {\n    switch($type) {\n        'bool' { if($val) { 1 } else { 0 } }\n        'color' {\n            if($val -notmatch '^#[\\da-f]{6}$') {\n                write-host \"ERROR: invalid color '$val', should be in hex format, e.g. #000000\" -f r\n                exit 1\n            }\n            $num = [convert]::toint32($val.substring(1,6), 16)\n            $bytes = [bitconverter]::getbytes($num)\n            for($i = 3; $i -gt 0; $i--) { $bytes[$i] = $bytes[$i-1] }\n            $bytes[0] = 0\n            [array]::reverse($bytes)\n            [bitconverter]::toint32($bytes, 0)\n        }\n        'cursor' {\n            switch($val) {\n                'small'  { 0x19 }\n                'medium' { 0x32 }\n                'large'  { 0x64 }\n                default {\n                    write-host \"WARNING: invalid cursor_size '$val', defaulting to 'small'\" -f yellow\n                    0x19\n                }\n            }\n        }\n        'fg_bg' {\n            $fg,$bg = $val.split(',')\n            if(!$fg -or !$bg) { write-host \"invalid foreground,background: $val\" -f red; exit 1 }\n            $fg_i = $colors.indexof($fg)\n            $bg_i = $colors.indexof($bg)\n            if($fg_i -eq -1) { write-host \"invalid foreground color: $fg\" -f red; exit 1 }\n            if($bg_i -eq -1) { write-host \"invalid background color: $bg\" -f red; exit 1 }\n            $bg_i * 16 + $fg_i\n        }\n        'int' { $val }\n        'string' { $val }\n        'dim' {\n            if($val -notmatch '^\\d+x\\d+$') { write-host \"invalid dimensions '$val'\" -f red; exit 1}\n            $width, $height = $val.split('x') | % { [int16]::parse($_) }\n            $width_b = [bitconverter]::getbytes($width)\n            $height_b = [bitconverter]::getbytes($height)\n            [byte[]]$bytes = @($width_b[0], $width_b[1], $height_b[0], $height_b[1])\n            \"$([bitconverter]::toint32($bytes, 0))\"\n        }\n    }\n}\n\nfunction get_src_text($src) {\n    # url\n    if($src -match '^https?://') { return (new-object net.webclient).downloadstring($src) }\n\n    # path\n    if(test-path $src) { return gc $src -raw }\n\n    # preset\n    $presets = \"$(split-path $myinvocation.mycommand.path)\\\n    if(!$src.endswith('.json')) $src += '.json'\n\n}\n\nfunction import($src) {\n    if(!$src) { \"ERROR: source missing\"; $usage; exit 1 }\n    if(!(test-path $path)) { \"couldn't find file: $path\" }\n    import (gc $path -raw)\n    write-host \"console settings were imported from $(split-path $path -leaf)\" -f darkgreen\n    write-host \"please note:\n\n * you'll need to restart the console to see the changes\n * if you're starting console from a shortcut (.lnk), it may override your\n   settings! just use Windows key, 'powershell.exe'!\n * if you still don't see any changes, run 'concfg clean' to remove any registry overrides\"\n}\n\n# handle the command\nswitch($cmd) {\n    'import' { import @args }\n    'export' {\n        $json = get_json\n        if($path) {\n            $json | out-file $path -encoding utf8\n            write-host \"console settings exported to $(split-path $path -leaf)\" -f darkgreen\n        }\n        else { $json }\n    }\n    'clean' {\n        \"sorry, not implmented yet!\"\n    }\n    default { $usage }\n}",
+			"file": "concfg.ps1",
+			"file_size": 6204,
+			"file_write_time": 1372653227000000,
+			"settings":
+			{
+				"buffer_size": 6337,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/C/Users/luke/projects/concfg/presets/solarized-light.json",
+		"/Volumes/C/Users/luke/projects/concfg/presets/default.json",
+		"/Volumes/C/Users/luke/projects/concfg/concfg.ps1",
+		"/Volumes/C/Users/luke/projects/psutils/consp/default.json",
+		"/Volumes/C/Users/luke/projects/psutils/consp/solarized.json",
+		"/Volumes/C/Users/luke/projects/psutils/README.md",
+		"/Volumes/C/Users/luke/projects/psutils/consp.ps1",
+		"/Volumes/C/Users/luke/projects/psutils/psutils.sublime-project",
+		"/Volumes/C/Users/luke/projects/psutils/vimtutor.ps1",
+		"/Volumes/C/Users/luke/projects/psutils/.gitattributes",
+		"/Volumes/C/Users/luke/projects/psutils/.gitignore",
+		"/Volumes/C/Users/luke/projects/scoop_utils/vimtutor.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/lib/cmd/which.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/tests/installer/install.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/mercurial.json",
+		"/Volumes/C/Users/luke/projects/scoop/lib/cmd/update.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/grep.json",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/vim.json",
+		"/Volumes/C/Users/luke/projects/scoop/lib/install.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/bin/scoop.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/lib/cmd/help.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/lib/cmd/install.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/lib/cmd/list.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/lib/cmd/search.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/lib/cmd/uninstall.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/lib/commands.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/runat.json",
+		"/Volumes/C/Users/luke/projects/scoop/lib/versions.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/lib/help.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/lib/manifest.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/postgresql.json",
+		"/Volumes/C/Users/luke/projects/scoop/lib/core.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/git.json",
+		"/Volumes/C/Users/luke/projects/scoop/tests/installer/tmp/.gitkeep",
+		"/Volumes/C/Users/luke/projects/scoop/bin/uninstall.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/bin/refresh.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/bin/install.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/README.md",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/7zip.json",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/scriptcs.json",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/less.json",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/python.json",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/wget.json",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/sed.json",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/notepad2.json",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/tar.json",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/curl.json",
+		"/Volumes/C/Users/luke/projects/scoop/stubtest.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/bucket/git-cred.json",
+		"/Volumes/C/Users/luke/projects/scoop/tests/rawargs.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/tests/supporting/command_info.ps1",
+		"/Users/luke/Library/Application Support/Sublime Text 2/Packages/Default/send2trash/plat_osx.py",
+		"/Volumes/C/Users/luke/projects/scoop/tests/fixtures/../echo_rawargs.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/tests/fixtures/echo_rawargs.ps1",
+		"/Users/luke/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Volumes/C/Users/luke/projects/scoop/scoop.sublime-project",
+		"/Volumes/C/Users/luke/projects/scoop/CNAME",
+		"/Volumes/C/Users/luke/projects/scoop/.gitattributes",
+		"/Volumes/C/Users/luke/projects/scoop/test_versions.ps1",
+		"/Users/luke/Library/Application Support/Sublime Text 2/Packages/Default/side_bar.py",
+		"/Volumes/C/Users/luke/projects/scoop/qsort-test.ps1",
+		"/Users/luke/Library/Application Support/Sublime Text 2/Packages/Default/exec.py",
+		"/Users/luke/Library/Application Support/Sublime Text 2/Packages/Package Control/Package Control.sublime-settings",
+		"/Users/luke/projects/loot/Gemfile",
+		"/Volumes/C/Users/luke/projects/scoop/lib/help_comments.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/lib/cmd/test.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/lib/init.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/.gitignore",
+		"/Volumes/C/Users/luke/projects/scoop/concept/install.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/uninstall.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/concept/uninstall.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/lib/../scoop.ps1",
+		"/Volumes/C/Users/luke/projects/scoop/._.DS_Store",
+		"/Users/luke/Desktop/psql migration/pre_postgres.sql",
+		"/Users/luke/Desktop/psql migration/post_postgres.sql",
+		"/Users/luke/Desktop/psql migration/pre_sql.sql",
+		"/Users/luke/Desktop/psql migration/sql_backup_cleanup.sql",
+		"/Users/luke/Desktop/serverfault_answer.txt",
+		"/Users/luke/Downloads/gitc/organisation structure details.txt",
+		"/Users/luke/Downloads/gitc/products services and pricing list.txt",
+		"/Users/luke/Desktop/traceroute_syd.studystays.com.html",
+		"/Users/luke/projects/loot/loot.sublime-workspace",
+		"/Users/luke/projects/loot/config/schedule.rb",
+		"/Users/luke/Documents/Screencasts/Categories/categories.txt",
+		"/Users/luke/projects/loot/lib/tasks/sync.rake",
+		"/Users/luke/Desktop/ok_tracert_sdb.ap-southeast-2.amazonaws.com.txt",
+		"/Users/luke/Desktop/traceroute_sdb.ap-southeast-2.amazonaws.com.txt",
+		"/Users/luke/projects/styleblog/_posts/2011-08-26-new-import-vssettings-xml.md",
+		"/Users/luke/projects/styleblog/_posts/2011-08-30-new-change-your-preferred-font.md",
+		"/Users/luke/projects/styleblog/_posts/2011-05-27-breakpoint-support.md",
+		"/Users/luke/projects/styleblog/_posts/2011-02-17-updates-download-and-voting-history.md",
+		"/Users/luke/projects/styleblog/_layouts/default.html",
+		"/Users/luke/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/luke/projects/styleblog/_posts/2012-03-16-web-matrix-2-support-beta.md",
+		"/Users/luke/projects/styleblog/images/2012/03/web-matrix.png",
+		"/Users/luke/projects/styleblog/images/2011/08/30906496-Capture.PNG",
+		"/Users/luke/projects/styleblog/images/2011/05/breakpoints.png",
+		"/Users/luke/projects/styleblog/_posts/2011-01-16-studiostyles-now-supports-razor-syntax.md",
+		"/Users/luke/projects/styleblog/_posts/2010-05-04-new-color-settings-for-xaml-and-user-types.md",
+		"/Users/luke/projects/styleblog/2011-02-19-new-search-schemes.md",
+		"/Users/luke/projects/styleblog/_posts/2011-02-19-new-search-schemes.md",
+		"/Users/luke/projects/styleblog/index.html",
+		"/Users/luke/projects/styleblog/_config.yml",
+		"/Users/luke/projects/styleblog/feed.xml",
+		"/Users/luke/projects/styleblog/_posts/2010-05-14-new-advanced-highlighting.md",
+		"/Users/luke/projects/styleblog/images/2010/05/copy.png",
+		"/Users/luke/projects/styleblog/_posts/2013-05-21-welcome-to-jekyll.markdown",
+		"/Users/luke/projects/styleblog/CNAME",
+		"/Users/luke/projects/styleblog/images/2010/05/squiggle.png",
+		"/Users/luke/projects/styleblog/_posts/2010-04-27-one-week-old.md",
+		"/Users/luke/projects/styleblog/css/blog.css",
+		"/Users/luke/projects/styleblog/posterous.rb",
+		"/Volumes/C/Users/luke/projects/scoop/install.ps1",
+		"/Users/luke/projects/rails4/app/views/layouts/application.html.erb",
+		"/Users/luke/projects/rails4/config/environments/test.rb",
+		"/Users/luke/projects/rails4/config/environments/development.rb",
+		"/Users/luke/projects/rails4/Gemfile",
+		"/Users/luke/projects/rails4/config/application.rb",
+		"/Users/luke/projects/rails4/config/environments/production.rb",
+		"/Users/luke/projects/loot/app/models/user.rb",
+		"/Users/luke/projects/loot/app/assets/stylesheets/application.css",
+		"/Users/luke/projects/loot/config/environments/development.rb",
+		"/Users/luke/projects/loot/config/environments/production.rb",
+		"/Users/luke/projects/loot/config/environments/test.rb",
+		"/Users/luke/projects/loot/config/initializers/secret_token.rb",
+		"/Users/luke/projects/loot/app/controllers/accounts_controller.rb",
+		"/Users/luke/projects/loot/config/deploy.rb",
+		"/Users/luke/projects/loot/app/controllers/sessions_controller.rb"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"",
+			"/Users/luke/projects/sspromo_docpad/src",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"purple",
+			"bitconvert",
+			"r",
+			"types",
+			"colortable",
+			"rm_user_path",
+			"path",
+			"stub",
+			"create_bin_stubs",
+			"stub",
+			"bindir",
+			"abs_bindir",
+			"stub",
+			"installed",
+			"scoop-master",
+			"apache",
+			"current_ver",
+			"latest_ver",
+			"install.ps1",
+			"scripts",
+			"write-host",
+			"couldn't find hash",
+			"hash \\$man",
+			"hash $man",
+			"msi \\$man",
+			"uninstaller \\$man",
+			"installer \\$man",
+			"url \\$man",
+			"url $man",
+			"architecture",
+			"url_filename",
+			"cached",
+			"echo_rawargs",
+			"match",
+			"-ea 0",
+			"couldn't remove",
+			"\"[A-Z]",
+			"\"[a-z]",
+			"'$app'",
+			"write",
+			"log",
+			"versions",
+			" }",
+			"appdir",
+			"succesf",
+			"args",
+			"appdir",
+			"skipping",
+			"skipped",
+			"help_comments",
+			"fname",
+			"init",
+			"core",
+			"version",
+			"https",
+			"downloadDa",
+			"scriptcs",
+			"-",
+			".all",
+			"all",
+			"#",
+			"max_days",
+			"cliprect",
+			"debug",
+			"max",
+			"url",
+			"555",
+			">,",
+			"rpc_server_class",
+			"cookies",
+			"update",
+			"/*",
+			"/*\\n",
+			"/*",
+			"highlightedHeader",
+			".inset",
+			"..\\",
+			"env",
+			"generate",
+			"/im",
+			"span.icon",
+			"/img",
+			"content_students",
+			"_page-pricing",
+			"font-size",
+			"add",
+			"_template"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 5,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "concfg.sublime-project",
+					"settings":
+					{
+						"buffer_size": 208,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								205,
+								205
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"settings":
+					{
+						"buffer_size": 1240,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										275,
+										281
+									],
+									[
+										329,
+										335
+									],
+									[
+										538,
+										544
+									],
+									[
+										722,
+										728
+									],
+									[
+										929,
+										935
+									],
+									[
+										1115,
+										1121
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								933,
+								933
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "presets/sensible.json",
+					"settings":
+					{
+						"buffer_size": 408,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								96,
+								96
+							]
+						],
+						"settings":
+						{
+							"auto_name": "{",
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "presets/default.json",
+					"settings":
+					{
+						"buffer_size": 969,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								662,
+								662
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "presets/solarized.json",
+					"settings":
+					{
+						"buffer_size": 576,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "concfg.ps1",
+					"settings":
+					{
+						"buffer_size": 6337,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5325,
+								5325
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PowerShell/Support/PowershellSyntax.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1966.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/Volumes/C/Users/luke/projects/scoop/scoop.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 383.0,
+	"status_bar_visible": true
+}
