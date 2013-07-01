@@ -17,11 +17,6 @@ Use the [Solarized](http://ethanschoonover.com/solarized) dark color presets:
 concfg import solarized
 ```
 
-Use some sensible font and buffer settings without affecting your colors:
-```
-concfg import sensible
-```
-
 Revert to the stock-standard console settings:
 ```
 concfg import default
