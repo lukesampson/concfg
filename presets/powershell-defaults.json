@@ -3,20 +3,13 @@
 
 Notes
 =====
-This is a really bad color set. It's the same as the console defaults, except:
+This the same as the console defaults, except:
 
  * dark_magenta is set to a dark blue, and used for the background
  * dark_yellow is set to white, and used for the foreground
 
-As a consequence, if you use these settings, sensibly-colored output may look
-very strange, or be invisible.
-
-It's also a really big window. I guess you do need 50% more space when you're
-typing function names that comply with the PowerShell Verb-Noun naming
-conventions.
-
-This is only here in case, for some reason, you need to reset to the defaults
-used for powershell shortcuts.
+It's also a really big window, since you need 50% more space when you're
+typing PowerShell Verb-Noun commands, if not more.
 
     ",
     "black":        "#000000",

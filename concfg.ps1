@@ -194,7 +194,7 @@ function import_cmd($src) {
 switch($cmd) {
 	'import' { import_cmd @args }
 	'export' {
-		$json = get_json
+		$json = export
 		$path = $args[0]
 		if($path) {
 			$json | out-file $path -encoding utf8
