@@ -94,9 +94,7 @@ function decode($val, $type) {
 			$fg = $colors[$fg_i]
 			"$fg,$bg"
 		}
-		'font_type' {
-			if($val -eq 0) { 0 } else { 54 }
-		}
+		'font_type' { ($val -gt 0) }
 		'int' { $val }
 		'string' { $val }
 		'dim' {
