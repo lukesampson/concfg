@@ -177,6 +177,10 @@ function text($src) {
 	
 }
 
+function clean {
+	gci hkcu:console | % { rm "registry::$($_.name)" }
+}
+
 function import_cmd($src) {
 	if(!$src) { "ERROR: source missing"; $usage; exit 1 }
 	$settings = text $src
@@ -185,13 +189,23 @@ function import_cmd($src) {
 
 	import $settings
 	write-host "console settings were imported from $src" -f darkgreen
-
-
-	write-host "please note:
-
- * if you start a new console from a shortcut (.lnk), it may override your
-   concfg settings.
+	write-host "
+*** note: if you start a new console from a shortcut (.lnk), it may override your concfg settings.
 "
+
+	if(gci hkcu:console) {
+		write-host "there are program-specific overrides in the registry that might interfere with your concfg settings." -f darkyellow
+		$yn = read-host "would you like to remove them? (Y/n)"
+		if(!$yn -or ($yn -like 'y*')) {
+			clean
+			write-host "registry overrides removed" -f darkgreen
+		} else {
+			write-host "ok. if you change your mind later you can run `concfg clean` to remove the overrides"
+		}
+	}
+
+	$yn = read-host "would you like to open a new console to see the changes? (Y/n)"
+	if(!$yn -or ($yn -like 'y*')) { start 'powershell.exe' -arg -nologo }
 }
 
 # handle the command
@@ -207,7 +221,7 @@ switch($cmd) {
 		else { $json }
 	}
 	'clean' {
-		gci hkcu:console | % { rm "registry::$($_.name)" }
+		clean
 		write-host "removed console property overrides from the registry" -f darkgreen
 	}
 	default { $usage }
