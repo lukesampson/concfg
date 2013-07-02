@@ -94,7 +94,9 @@ function decode($val, $type) {
 			$fg = $colors[$fg_i]
 			"$fg,$bg"
 		}
-		'font_type' { }
+		'font_type' {
+			if($val -eq 0) { 0 } else { 54 }
+		}
 		'int' { $val }
 		'string' { $val }
 		'dim' {
@@ -141,6 +143,9 @@ function encode($val, $type) {
 			if($bg_i -eq -1) { write-host "invalid background color: $bg" -f red; exit 1 }
 			$bg_i * 16 + $fg_i
 		}
+		'font_type' {
+			if($val) { 54 } else { 0 }
+		}
 		'int' { $val }
 		'string' { $val }
 		'dim' {
@@ -180,13 +185,12 @@ function import_cmd($src) {
 
 	import $settings
 	write-host "console settings were imported from $src" -f darkgreen
+
+
 	write-host "please note:
 
- * you'll need to restart the console to see the changes
- * if you're starting console from a shortcut (.lnk), it may override your
-   settings! just use Windows key, 'powershell.exe'!
- * if you still don't see any changes, run 'concfg clean' to remove any
-   program-specific overrides from the registry
+ * if you start a new console from a shortcut (.lnk), it may override your
+   concfg settings.
 "
 }
 
