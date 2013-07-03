@@ -1,0 +1,124 @@
+# Usage: concfg import <preset>|<path>|<url>
+# Summary: Import console settings from a JSON file
+# Help: e.g. concfg import solarized
+param($src)
+
+. "$psscriptroot\..\lib\core.ps1"
+. "$psscriptroot\..\lib\help.ps1"
+
+function encode($val, $type) {
+    switch($type) {
+        'bool' { if($val) { 1 } else { 0 } }
+        'color' {
+            if($val -notmatch '^#[\da-f]{6}$') {
+                write-host "ERROR: invalid color '$val', should be in hex format, e.g. #000000" -f r
+                exit 1
+            }
+            $num = [convert]::toint32($val.substring(1,6), 16)
+            $bytes = [bitconverter]::getbytes($num)
+            for($i = 3; $i -gt 0; $i--) { $bytes[$i] = $bytes[$i-1] }
+            $bytes[0] = 0
+            [array]::reverse($bytes)
+            [bitconverter]::toint32($bytes, 0)
+        }
+        'cursor' {
+            switch($val) {
+                'small'  { 0x19 }
+                'medium' { 0x32 }
+                'large'  { 0x64 }
+                default {
+                    write-host "WARNING: invalid cursor_size '$val', defaulting to 'small'" -f yellow
+                    0x19
+                }
+            }
+        }
+        'fg_bg' {
+            $fg,$bg = $val.split(',')
+            if(!$fg -or !$bg) { write-host "invalid foreground,background: $val" -f red; exit 1 }
+            $fg_i = $colors.indexof($fg)
+            $bg_i = $colors.indexof($bg)
+            if($fg_i -eq -1) { write-host "invalid foreground color: $fg" -f red; exit 1 }
+            if($bg_i -eq -1) { write-host "invalid background color: $bg" -f red; exit 1 }
+            $bg_i * 16 + $fg_i
+        }
+        'font_type' {
+            if($val) { 54 } else { 0 }
+        }
+        'int' { $val }
+        'string' { $val }
+        'dim' {
+            if($val -notmatch '^\d+x\d+$') { write-host "invalid dimensions '$val'" -f red; exit 1}
+            $width, $height = $val.split('x') | % { [int16]::parse($_) }
+            $width_b = [bitconverter]::getbytes($width)
+            $height_b = [bitconverter]::getbytes($height)
+            [byte[]]$bytes = @($width_b[0], $width_b[1], $height_b[0], $height_b[1])
+            "$([bitconverter]::toint32($bytes, 0))"
+        }
+    }
+}
+
+function preset($name) {
+    if(!$name.endswith('.json')) { $name = "$name.json" }
+    $x = "$psscriptroot\..\presets\$name"
+    if(test-path $x) { gc $x -raw }
+}
+
+function text($src) {
+    # url
+    if($src -match '^https?://') { return (new-object net.webclient).downloadstring($src) }
+
+    # local file path
+    if(test-path $src) { return gc $src -raw }
+    
+    # preset
+    preset $src
+    
+}
+
+function import_json($json) {
+    $props = $json | convertfrom-json
+
+    # encode everything first before setting registry values, in case
+    # anything goes wrong
+    $encoded = @{}
+
+    $props.psobject.properties | % {
+        $key,$type = $reverse_map[$_.name]
+        $val = $_.value
+        if($key) { $encoded[$key] = (encode $val $type) }
+    }
+
+    $encoded.keys | % { 
+        sp hkcu:\console $_ $encoded[$_]
+    }
+}
+
+if(!$src) { "ERROR: source missing"; my_usage; exit 1 }
+$json = text $src
+
+if(!$json) { "ERROR: couldn't load settings from $src"; exit 1 }
+
+import_json $json
+write-host "console settings were imported from $src" -f darkgreen
+write-host "
+*** note: if you start a new console from a shortcut (.lnk), it may override
+      your concfg settings.
+"
+
+if(gci hkcu:console) {
+    write-host "
+there are program-specific overrides in the registry that might interfere with
+your concfg settings." -f darkyellow
+    $yn = read-host "would you like to remove them? (Y/n)"
+    if(!$yn -or ($yn -like 'y*')) {
+        & "$psscriptroot\clean.ps1"
+        write-host "registry overrides removed" -f darkgreen
+    } else {
+        write-host "
+ok. if you change your mind later you can run `concfg clean` to remove the
+overrides"
+    }
+}
+
+$yn = read-host "would you like to open a new console to see the changes? (Y/n)"
+if(!$yn -or ($yn -like 'y*')) { start 'powershell.exe' -arg -nologo }
