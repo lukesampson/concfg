@@ -1,5 +1,5 @@
 {
-    "black":        "#073642",
+    "black":        "#002b36",
     "dark_blue":    "#268bd2",
     "dark_green":   "#859900",
     "dark_aqua":    "#2aa198",
@@ -7,7 +7,7 @@
     "dark_magenta": "#d33682",
     "dark_yellow":  "#b58900",
     "gray":         "#eee8d5",
-    "dark_gray":    "#002b36",
+    "dark_gray":    "#073642",
     "blue":         "#839496",
     "green":        "#586e75",
     "cyan":         "#93a1a1",
@@ -16,7 +16,7 @@
     "yellow":       "#657b83",
     "white":        "#fdf6e3",
 
-    "screen_colors": "blue,dark_gray",
+    "screen_colors": "blue,black",
     "popup_colors":  "yellow,white",
     
     "font_face":       "Consolas",
