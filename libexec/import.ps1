@@ -8,8 +8,6 @@
 # This will import the 'solarized-light' preset and the 'small' preset.
 # When importing multiple sources, the later sources will override settings
 # from the earlier ones.
-param($src)
-
 . "$psscriptroot\..\lib\core.ps1"
 . "$psscriptroot\..\lib\help.ps1"
 
@@ -100,13 +98,26 @@ function import_json($json) {
     }
 }
 
-if(!$src) { "ERROR: source missing"; my_usage; exit 1 }
-$json = text $src
+# flattens $args in case commas were used to separate sources
+function get_sources($a) {
+    $srcs = @()
+    $a | % { $srcs += $_ }
+    $srcs
+}
 
-if(!$json) { "ERROR: couldn't load settings from $src"; exit 1 }
+if($args.length -eq 0) { "ERROR: source missing"; my_usage; exit 1 }
 
-import_json $json
-write-host "console settings were imported from $src" -f darkgreen
+$srcs = @(get_sources $args)
+
+foreach($s in $srcs) {
+    $json = text $s
+
+    if(!$json) { "ERROR: couldn't load settings from $s"; exit 1 }
+
+    import_json $json
+    write-host "console settings were imported from $s" -f darkgreen
+}
+
 write-host "
 *** note: if you start a new console from a shortcut (.lnk), it may override
       your concfg settings.
