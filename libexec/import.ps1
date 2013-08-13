@@ -1,6 +1,13 @@
-# Usage: concfg import <preset>|<path>|<url>
+# Usage: concfg import <preset>|<path>|<url>...
 # Summary: Import console settings from a JSON file
 # Help: e.g. concfg import solarized
+#
+# You can import multiple sources at once, e.g.
+#     concfg import solarized-light small
+#
+# This will import the 'solarized-light' preset and the 'small' preset.
+# When importing multiple sources, the later sources will override settings
+# from the earlier ones.
 param($src)
 
 . "$psscriptroot\..\lib\core.ps1"
