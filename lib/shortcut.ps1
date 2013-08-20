@@ -7,5 +7,7 @@ function linksto($path, $target) {
 	$shell = new-object -com wscript.shell -strict
 	$shortcut = $shell.createshortcut($path)
 
-	return $shortcut.targetpath -eq $target
+	$result = $shortcut.targetpath -eq $target
+	[Runtime.Interopservices.Marshal]::ReleaseComObject($shortcut) > $null
+	return $result
 }
