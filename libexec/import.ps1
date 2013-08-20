@@ -57,7 +57,7 @@ function encode($val, $type) {
 			$width_b = [bitconverter]::getbytes($width)
 			$height_b = [bitconverter]::getbytes($height)
 			[byte[]]$bytes = @($width_b[0], $width_b[1], $height_b[0], $height_b[1])
-			"$([bitconverter]::toint32($bytes, 0))"
+			[bitconverter]::toint32($bytes, 0)
 		}
 	}
 }
