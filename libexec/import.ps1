@@ -93,6 +93,8 @@ function import_json($json) {
 		if($key) { $encoded[$key] = (encode $val $type) }
 	}
 
+	if(!(test-path hkcu:\console)) { ni hkcu:\Console > $null } 
+
 	$encoded.keys | % { 
 		sp hkcu:\console $_ $encoded[$_]
 	}
