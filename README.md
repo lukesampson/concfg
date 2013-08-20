@@ -1,13 +1,11 @@
 ## concfg
 
-`concfg` is a utility to import and export Windows console settings like fonts and colors. It includes presets for Ethan Schoonover's excellent [Solarized](http://ethanschoonover.com/solarized) color theme.
+`concfg` is a utility to import and export Windows console settings like fonts and colors.
 
 If you have [Scoop](http://scoop.sh), you can install concfg with `scoop install concfg`.
 
 ### Important Caveats
-* Console will need to be restarted after an import before you see the changes.
-
-* Console settings can be overridden by program- or shortcut-specific settings stored in the registry or in the .lnk file itself. If you're importing settings, you can run `concfg clean` to remove registry settings that might conflict. If you're still not seeing changes (likely if you're using a PowerShell shortcut to launch the console), then you might want to use Windows-key, 'powershell.exe' to launch it directly, or create your own fresh shortcut (don't copy an existing PowerShell one!).
+* Console settings can be overridden by program- or shortcut-specific settings stored in the registry or in the .lnk file itself. Concfg can attempt to clean these up for you by removing registry settings that might conflict and removing console properties from .lnk files in known directories. `concfg import` will prompt you to clean these up after an import, or you can run `concfg clean` at any time. 
 
 ### Examples
 
@@ -43,4 +41,7 @@ Although, if you're making a color theme from scratch, you might find it easier 
 Type `concfg` without parameters to see the usage info.
 
 ### Credits
+Includes presets for Ethan Schoonover's excellent [Solarized](http://ethanschoonover.com/solarized) color theme.
+
 Code for removing console properties from shortucts is based on code from the [Coapp Toolkit](https://github.com/coapp/coapp) project.
+
