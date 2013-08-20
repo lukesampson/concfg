@@ -7,41 +7,41 @@ param($cmd)
 . "$psscriptroot\..\lib\help.ps1"
 
 function print_help($cmd) {
-    $file = gc ("$psscriptroot\$cmd.ps1") -raw
+	$file = gc ("$psscriptroot\$cmd.ps1") -raw
 
-    $usage = usage $file
-    $summary = summary $file
-    $help = help $file
+	$usage = usage $file
+	$summary = summary $file
+	$help = help $file
 
-    if($usage) { "$usage`n" }
-    if($help) { $help }
+	if($usage) { "$usage`n" }
+	if($help) { $help }
 }
 
 function print_summaries {
-    $commands = @{}
+	$commands = @{}
 
-    command_files | % {
-        $command = command_name $_
-        $summary = summary (gc ("$psscriptroot\$_") -raw )
-        if(!($summary)) { $summary = '' }
-        $commands.add("$command ", $summary) # add padding
-    }
+	command_files | % {
+		$command = command_name $_
+		$summary = summary (gc ("$psscriptroot\$_") -raw )
+		if(!($summary)) { $summary = '' }
+		$commands.add("$command ", $summary) # add padding
+	}
 
-    $commands.getenumerator() | sort name | ft -hidetablehead -autosize -wrap
+	$commands.getenumerator() | sort name | ft -hidetablehead -autosize -wrap
 }
 
 $commands = commands
 
 if(!($cmd)) {
-    "usage: concfg <command> [<args]
+	"usage: concfg <command> [<args]
 
 Some useful commands are:"
-    print_summaries
-    "type 'concfg help <command>' to get help for a specific command"
+	print_summaries
+	"type 'concfg help <command>' to get help for a specific command"
 } elseif($commands -contains $cmd) {
-    print_help $cmd
+	print_help $cmd
 } else {
-    "concfg help: no such command '$cmd'"; exit 1
+	"concfg help: no such command '$cmd'"; exit 1
 }
 
 exit 0

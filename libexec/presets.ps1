@@ -4,5 +4,5 @@
 
 "Available presets:"
 gci "$psscriptroot\..\presets" | % {
-    "   $([io.path]::getfilenamewithoutextension($_.name))"
+	"   $([io.path]::getfilenamewithoutextension($_.name))"
 }

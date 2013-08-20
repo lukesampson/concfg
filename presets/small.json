@@ -1,4 +1,4 @@
 {
-    "window_size":        "80x25",
-    "screen_buffer_size": "80x300"
+	"window_size":        "80x25",
+	"screen_buffer_size": "80x300"
 }
