@@ -41,3 +41,6 @@ Although, if you're making a color theme from scratch, you might find it easier 
 ### Help
 
 Type `concfg` without parameters to see the usage info.
+
+### Credits
+Code for removing console properties from shortucts is based on code from the [Coapp Toolkit](https://github.com/coapp/coapp) project.
