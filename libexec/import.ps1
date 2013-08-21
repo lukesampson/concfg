@@ -132,7 +132,7 @@ your concfg settings." -f darkyellow
 	$yn = read-host "would you like to remove them? (Y/n)"
 	if(!$yn -or ($yn -like 'y*')) {
 		& "$psscriptroot\clean.ps1"
-		write-host "registry overrides removed" -f darkgreen
+		write-host "overrides removed" -f darkgreen
 	} else {
 		write-host "
 ok. if you change your mind later you can run `concfg clean` to remove the

@@ -63,8 +63,12 @@ namespace concfg {
 add-type -typedef $cs -lang csharp
 
 function rmprops($path) {
-	if(!(isshortcut $path)) { return }
+	if(!(isshortcut $path)) { return $false }
 
 	$path = "$(resolve-path $path)"
-	[concfg.shortcut]::rmprops($path)
+	try { [concfg.shortcut]::rmprops($path) }
+	catch [UnauthorizedAccessException] {
+		return $false
+	}
+	$true
 }
