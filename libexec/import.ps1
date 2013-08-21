@@ -121,23 +121,16 @@ foreach($s in $srcs) {
 }
 
 write-host "
-*** note: if you start a new console from a shortcut (.lnk), it may override
-	  your concfg settings.
-"
-
-if(gci hkcu:console) {
+overrides in the registry and shortcut files might interfere with
+your concfg settings."
+$yn = read-host "would you like to search for and remove them? (Y/n)"
+if(!$yn -or ($yn -like 'y*')) {
+	& "$psscriptroot\clean.ps1"
+	write-host "overrides removed" -f darkgreen
+} else {
 	write-host "
-there are program-specific overrides in the registry that might interfere with
-your concfg settings." -f darkyellow
-	$yn = read-host "would you like to remove them? (Y/n)"
-	if(!$yn -or ($yn -like 'y*')) {
-		& "$psscriptroot\clean.ps1"
-		write-host "overrides removed" -f darkgreen
-	} else {
-		write-host "
-ok. if you change your mind later you can run `concfg clean` to remove the
+ok. if you change your mind later you can run `concfg clean` to remove
 overrides"
-	}
 }
 
 $yn = read-host "would you like to open a new console to see the changes? (Y/n)"
