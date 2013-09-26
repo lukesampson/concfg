@@ -17,7 +17,7 @@ concfg import solarized
 
 Revert to the stock-standard console settings:
 ```
-concfg import default
+concfg import defaults
 ```
 
 ##### Importing settings from a URL
