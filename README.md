@@ -43,5 +43,5 @@ Type `concfg` without parameters to see the usage info.
 ### Credits
 Includes presets for Ethan Schoonover's excellent [Solarized](http://ethanschoonover.com/solarized) color theme.
 
-Code for removing console properties from shortucts is based on code from the [Coapp Toolkit](https://github.com/coapp/coapp) project.
+Code for removing console properties from shortcuts is based on code from the [Coapp Toolkit](https://github.com/coapp/coapp) project.
 
