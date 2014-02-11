@@ -1,4 +1,4 @@
-# Usage: concfg import <preset>|<path>|<url>...
+# Usage: concfg import [options] <preset>|<path>|<url>...
 # Summary: Import console settings from a JSON file
 # Help: e.g. concfg import solarized
 #
@@ -8,8 +8,12 @@
 # This will import the 'solarized-light' preset and the 'small' preset.
 # When importing multiple sources, the later sources will override settings
 # from the earlier ones.
+#
+# Options:
+#   --non-interactive, -n: don't prompt for input
 . "$psscriptroot\..\lib\core.ps1"
 . "$psscriptroot\..\lib\help.ps1"
+. "$psscriptroot\..\lib\getopt.ps1"
 
 function encode($val, $type) {
 	switch($type) {
@@ -107,31 +111,38 @@ function get_sources($a) {
 	$srcs
 }
 
-if($args.length -eq 0) { "ERROR: source missing"; my_usage; exit 1 }
+$opts, $args, $err = getopt $args 'n' @('non-interactive')
+if($err) { "concfg: ERROR: $err"; my_usage; exit 1 }
+
+$non_interactive = $opts['non-interactive'] -or $opts.n
+
+if($args.length -eq 0) { "concfg: ERROR: source missing"; my_usage; exit 1 }
 
 $srcs = @(get_sources $args)
 
 foreach($s in $srcs) {
 	$json = text $s
 
-	if(!$json) { "ERROR: couldn't load settings from $s"; exit 1 }
+	if(!$json) { "concfg: ERROR: couldn't load settings from $s"; exit 1 }
 
 	import_json $json
 	write-host "console settings were imported from $s" -f darkgreen
 }
 
-write-host "
-overrides in the registry and shortcut files might interfere with
-your concfg settings."
-$yn = read-host "would you like to search for and remove them? (Y/n)"
-if(!$yn -or ($yn -like 'y*')) {
-	& "$psscriptroot\clean.ps1"
-	write-host "overrides removed" -f darkgreen
+if(!$non_interactive) {
+	write-host (wraptext "`noverrides in the registry and shortcut files might interfere with your concfg settings.")
+	$yn = read-host "would you like to find and remove them? (Y/n)"
+	if(!$yn -or ($yn -like 'y*')) {
+		& "$psscriptroot\clean.ps1"
+		write-host "overrides removed" -f darkgreen
+	} else {
+		write-host (wraptext "`nok. if you change your mind later you can run 'concfg clean' to remove overrides")
+	}
+
+	$yn = read-host "would you like to open a new console to see the changes? (Y/n)"
+	if(!$yn -or ($yn -like 'y*')) { start 'powershell.exe' -arg -nologo }
 } else {
-	write-host "
-ok. if you change your mind later you can run `concfg clean` to remove
-overrides"
+	write-host (wraptext "please start a new console to see changes")
+	write-host (wraptext "you may also need to run 'concfg clean' to remove overrides from the registry and shortcut files.")
 }
 
-$yn = read-host "would you like to open a new console to see the changes? (Y/n)"
-if(!$yn -or ($yn -like 'y*')) { start 'powershell.exe' -arg -nologo }
