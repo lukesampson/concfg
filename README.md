@@ -41,7 +41,9 @@ Although, if you're making a color theme from scratch, you might find it easier 
 Type `concfg` without parameters to see the usage info.
 
 ### Credits
-Includes presets for Ethan Schoonover's excellent [Solarized](http://ethanschoonover.com/solarized) color theme.
+Thanks to Stephen Edgar([@ntwb](https://github.com/ntwb)) for adding support for [Chris Kempson](http://chriskempson.com/)'s [base16](http://chriskempson.github.io/base16/) color settings.
+
+Concfg uses Ethan Schoonover's [Solarized](http://ethanschoonover.com/solarized) color theme.
 
 Code for removing console properties from shortcuts is based on code from the [Coapp Toolkit](https://github.com/coapp/coapp) project.
 
