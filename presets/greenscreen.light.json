@@ -1,20 +1,20 @@
 {
 	"black":        "#001100",
 	"dark_blue":    "#009900",
-	"dark_green":   "#005500",
-	"dark_cyan":    "#00bb00",
-	"dark_red":     "#009900",
+	"dark_green":   "#00bb00",
+	"dark_cyan":    "#005500",
+	"dark_red":     "#007700",
 	"dark_magenta": "#00bb00",
 	"dark_yellow":  "#007700",
 	"gray":         "#00dd00",
 	"dark_gray":    "#003300",
 	"blue":         "#009900",
-	"green":        "#00bb00",
-	"cyan":         "#005500",
-	"red":          "#007700",
+	"green":        "#005500",
+	"cyan":         "#00bb00",
+	"red":          "#009900",
 	"magenta":      "#005500",
 	"yellow":       "#007700",
 	"white":        "#00ff00",
-	"screen_colors": "dark_yellow,white",
-	"popup_colors":  "dark_cyan,black"
+	"screen_colors": "black,white",
+	"popup_colors":  "white,black"
 }
