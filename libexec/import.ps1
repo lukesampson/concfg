@@ -126,7 +126,7 @@ foreach($s in $srcs) {
 	if(!$json) { "concfg: ERROR: couldn't load settings from $s"; exit 1 }
 
 	import_json $json
-	write-host "console settings were imported from $s" -f green
+	write-host "console settings were imported from $s" -f darkgreen
 }
 
 if(!$non_interactive) {
@@ -134,7 +134,7 @@ if(!$non_interactive) {
 	$yn = read-host "would you like to find and remove them? (Y/n)"
 	if(!$yn -or ($yn -like 'y*')) {
 		& "$psscriptroot\clean.ps1"
-		write-host "overrides removed" -f green
+		write-host "overrides removed" -f darkgreen
 	} else {
 		write-host (wraptext "`nok. if you change your mind later you can run 'concfg clean' to remove overrides")
 	}

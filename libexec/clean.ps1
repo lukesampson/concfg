@@ -18,7 +18,7 @@ function cleandir($dir) {
 			$path = $_.fullname
 			if(linksto $path $pspath) {
 				if(!(rmprops $path)) {
-					write-host "warning: admin permission is required to remove console props from $path" -f yellow
+					write-host "warning: admin permission is required to remove console props from $path" -f darkyellow
 				}
 			}
 		}

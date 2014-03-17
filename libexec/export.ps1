@@ -57,6 +57,6 @@ function export_json {
 $json = export_json
 if($path) {
 	$json | out-file $path -encoding utf8
-	write-host "console settings exported to $(split-path $path -leaf)" -f green
+	write-host "console settings exported to $(split-path $path -leaf)" -f darkgreen
 }
 else { $json }
