@@ -36,6 +36,7 @@ if(test-path hkcu:console) {
 # clean .lnk files
 $dirs = @(
 	"~\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar",
+	"~\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell",
 	"\ProgramData\Microsoft\Windows\Start Menu\Programs"
 )
 
