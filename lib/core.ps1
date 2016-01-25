@@ -14,6 +14,7 @@ $map = @{
 	'CursorSize'=@('cursor_size','cursor')
 	'QuickEdit'=@('quick_edit', 'bool')
 	'ScreenBufferSize'=@('screen_buffer_size', 'dim')
+	'WindowPosition'=@('window_position', 'dim')
 	'WindowSize'=@('window_size', 'dim')
 	'PopupColors'=@('popup_colors', 'fg_bg')
 	'ScreenColors'=@('screen_colors', 'fg_bg')
