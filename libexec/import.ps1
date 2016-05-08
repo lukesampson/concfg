@@ -107,7 +107,7 @@ function import_json($json) {
 # flattens $args in case commas were used to separate sources
 function get_sources($a) {
 	$srcs = @()
-	$a | % { $srcs += $_ }
+	$a | % { $srcs += [string]$_ }
 	$srcs
 }
 
