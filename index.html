@@ -1,8 +1,115 @@
-<html>
+<!DOCTYPE html>
+<html ng-app="mainApp">
     <head>
         <title>PS Theme Viewer</title>
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script>
+            angular.module('mainApp', [])
+                .controller('mainController', ['$scope', function ($scope) {
+                    $scope.txt = 'New Value';
+                    $scope.load = function() {
+                      var preset = JSON.parse($scope.txt);
+                      console.log(preset);
+                      $scope.theme = preset;
+                    }
+                    $scope.invertColor = function (hexTripletColor) {
+                      var color = hexTripletColor;
+                      color = color.substring(1);           // remove #
+                      color = parseInt(color, 16);          // convert to integer
+                      color = 0xFFFFFF ^ color;             // invert three bytes
+                      color = color.toString(16);           // convert to hex
+                      color = ("000000" + color).slice(-6); // pad with leading zeros
+                      color = "#" + color;                  // prepend #
+                      return color;
+                    }
+                }])
+        </script>
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+        <style media="screen">
+          html, body {
+            margin: 0;
+            padding: 0;
+          }
+          body {
+            margin: 20px 0;
+            box-sizing: border-box;
+          }
+          .textarea {
+            width: 100%;
+            height: 50%;
+            font-family: monospace;
+          }
+          .swatch {
+            height: 108px;
+            position: relative;
+          }
+          .swatch span {
+            position: absolute;
+            bottom: 10px;
+            display: block;
+            text-align: center;
+          }
+        </style>
     </head>
-    <body>
-        Thanks
+    <body ng-controller="mainController">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <textarea class=textarea name="txtJson" id="" cols="30" rows="20" ng-model="txt"></textarea>
+          </div>
+          <div class="col-md-12 col-sm-12">
+            <button type="button" class="btn btn-primary" ng-click="load()">Load It!</button>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.black}}; color : {{theme.black?invertColor(theme.black):'#000000'}}">
+            <span>Black</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.dark_blue}}; color : {{theme.black?invertColor(theme.dark_blue):'#000000'}}">
+            <span>Dark Blue</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.dark_green}}; color : {{theme.black?invertColor(theme.dark_blue):'#000000'}}">
+            <span>Dark Green</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.dark_cyan}}; color : {{theme.black?invertColor(theme.dark_cyan):'#000000'}}">
+            <span>Dark Cyan</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.dark_red}}; color : {{theme.black?invertColor(theme.dark_red):'#000000'}}">
+            <span>Dark Red</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.dark_magenta}}; color : {{theme.black?invertColor(theme.dark_magenta):'#000000'}}">
+            <span>Dark Magenta</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.dark_yellow}}; color : {{theme.black?invertColor(theme.dark_yellow):'#000000'}}">
+            <span>Dark Yellow</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.dark_gray}}; color : {{theme.black?invertColor(theme.dark_gray):'#000000'}}">
+            <span>Dark Gray</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.gray}}; color : {{theme.black?invertColor(theme.gray):'#000000'}}">
+            <span>Gray</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.blue}}; color : {{theme.black?invertColor(theme.blue):'#000000'}}">
+            <span>Blue</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.green}}; color : {{theme.black?invertColor(theme.green):'#000000'}}">
+            <span>Green</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.cyan}}; color : {{theme.black?invertColor(theme.cyan):'#000000'}}">
+            <span>Cyan</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.red}}; color : {{theme.black?invertColor(theme.red):'#000000'}}">
+            <span>Red</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.magenta}}; color : {{theme.black?invertColor(theme.magenta):'#000000'}}">
+            <span>Magenta</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.yellow}}; color : {{theme.black?invertColor(theme.yellow):'#000000'}}">
+            <span>Yellow</span>
+          </div>
+          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.white}}; color : {{theme.black?invertColor(theme.white):'#000000'}}">
+            <span>White</span>
+          </div>
+        </div>
+      </div>
     </body>
 </html>
