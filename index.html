@@ -117,29 +117,31 @@
 
                 $scope.load = function() {
                   git.getPreset($scope.selectedPreset.url).then(function (response) {
-                    $scope.theme = JSON.parse(atob(response));
+                    var decodedContent = atob(response);
+                    console.log(decodedContent);
+                    $scope.theme = JSON.parse(decodedContent);
                   })
                 }
-                // $scope.theme = {
-              	// 	black:        "#272822",
-              	// 	dark_blue:    "#66d9ef",
-              	// 	dark_green:   "#a6e22e",
-              	// 	dark_cyan:    "#a1efe4",
-              	// 	dark_red:     "#f92672",
-              	// 	dark_magenta: "#ae81ff",
-              	// 	dark_yellow:  "#fd971f",
-              	// 	gray:         "#f5f4f1",
-              	// 	dark_gray:    "#878782",
-              	// 	blue:         "#a59f85",
-              	// 	green:        "#49483e",
-              	// 	cyan:         "#f8f8f2",
-              	// 	red:          "#f4bf75",
-              	// 	magenta:      "#cc6633",
-              	// 	yellow:       "#bab8ae",
-              	// 	white:        "#f9f8f5",
-              	// 	screen_colors: "cyan,black",
-              	// 	popup_colors:  "black,cyan"
-              	// }
+
+                $scope.theme = {
+                  "black":        "#000000",
+                	"dark_blue":    "#000080",
+                	"dark_green":   "#008000",
+                	"dark_cyan":    "#008080",
+                	"dark_red":     "#800000",
+                	"dark_magenta": "#800080",
+                	"dark_yellow":  "#808000",
+                	"gray":         "#c0c0c0",
+                	"dark_gray":    "#808080",
+                	"blue":         "#0000ff",
+                	"green":        "#00ff00",
+                	"cyan":         "#00ffff",
+                	"red":          "#ff0000",
+                	"magenta":      "#ff00ff",
+                	"yellow":       "#ffff00",
+                	"white":        "#ffffff"
+              	}
+
                 $scope.invertColor = function (hexTripletColor) {
                   var color = hexTripletColor;
                   color = color.substring(1);           // remove #
