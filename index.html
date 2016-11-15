@@ -190,7 +190,7 @@
                 </button>
                 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                   <li role="menuitem" ng-if="!presets"><a href="#">Loading ...</a></li>
-                  <li role="menuitem" ng-repeat="preset in presets" ng-click="presetSelected(preset)"><a href="#">{{preset.path}}</a></li>
+                  <li role="menuitem" ng-repeat="preset in presets" ng-click="presetSelected(preset)"><a>{{preset.path}}</a></li>
                 </ul>
               </div>
               <button type="button" class="btn btn-primary" ng-disabled="!isTemplateSelected" ng-click="load()">Load It!</button>
