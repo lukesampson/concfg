@@ -4,26 +4,153 @@
         <title>PS Theme Viewer</title>
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
         <script>
-            angular.module('mainApp', [])
-                .controller('mainController', ['$scope', function ($scope) {
-                    $scope.txt = 'New Value';
-                    $scope.load = function() {
-                      var preset = JSON.parse($scope.txt);
-                      console.log(preset);
-                      $scope.theme = preset;
-                    }
-                    $scope.invertColor = function (hexTripletColor) {
-                      var color = hexTripletColor;
-                      color = color.substring(1);           // remove #
-                      color = parseInt(color, 16);          // convert to integer
-                      color = 0xFFFFFF ^ color;             // invert three bytes
-                      color = color.toString(16);           // convert to hex
-                      color = ("000000" + color).slice(-6); // pad with leading zeros
-                      color = "#" + color;                  // prepend #
-                      return color;
-                    }
-                }])
+          function encode_utf8(s) {
+            return unescape(encodeURIComponent(s));
+          }
+
+          function decode_utf8(s) {
+            return decodeURIComponent(escape(s));
+          }
+
+          angular.module('mainApp', ['ui.bootstrap'])
+            .provider('gitService', function() {
+              // store the git credentials in the provider
+              var gitCredentials = {
+                client_id: '4c45baec3873ead63c91',
+                client_secret: '0ace241b5bf4a6e5136b43be7bb4da9c67bb41c2'
+              };
+
+              // variable to store the branch tree url
+              var gitBranchTreeUrl = '';
+              var presetFolderUrl = '';
+
+              // base request url
+              var baseRequest = {
+                method: 'GET',
+                params: gitCredentials
+              }
+
+                // provider
+                this.$get = ['$http', function($http) {
+                  var service = {};
+
+                  service.getBranch = function() {
+                    var requestBranch = {};
+                    angular.copy(baseRequest, requestBranch);
+                    requestBranch.url = 'https://api.github.com/repos/MindzGroupTechnologies/concfg/branches/master';
+
+                    return $http(requestBranch).then(function(response) {
+                      gitBranchTreeUrl = response.data.commit.commit.tree.url;
+                      return true;
+                    });
+                  }
+
+                  service.getBranchTree = function () {
+                    var requestBranchTree = {};
+                    angular.copy(baseRequest, requestBranchTree);
+                    requestBranchTree.url = gitBranchTreeUrl;
+
+                    return $http(requestBranchTree).then(function (response) {
+                      response.data.tree.forEach(function (item) {
+                        if(item.path == 'presets') {
+                          presetFolderUrl = item.url;
+                        }
+                      });
+                      if(presetFolderUrl) return true
+                      else return false;
+                    });
+                  }
+
+                  service.getPresetList = function() {
+                    var requestPresetFolderTree = {};
+                    angular.copy(baseRequest, requestPresetFolderTree);
+                    requestPresetFolderTree.url = presetFolderUrl;
+
+                    return $http(requestPresetFolderTree).then(function (response) {
+                      return response.data.tree;
+                    })
+                  }
+
+                  service.getPreset = function(url) {
+                    var requestPreset = {};
+                    angular.copy(baseRequest, requestPreset);
+                    requestPreset.url = url;
+
+                    return $http(requestPreset).then(function (response) {
+                      return response.data.content;
+                    })
+                  }
+
+                  return service;
+                }]
+              })
+              .controller('mainController', ['$scope', 'gitService', function ($scope, git) {
+                $scope.themes = ['']
+                //https://rawgit.com/MindzGroupTechnologies/concfg/master/presets/aag.json
+                $scope.txt = 'New Value';
+                git.getBranch().then(function(response) {
+                  console.log('retrived branch: ', response);
+                  git.getBranchTree().then(function (response) {
+                    console.log('retrived branch tree: ', response);
+                    git.getPresetList().then(function(response) {
+                      $scope.presets = response;
+                    });
+                  });
+                });
+                $scope.status = {
+                  isopen: false
+                };
+
+                $scope.isTemplateSelected = false;
+
+                $scope.selectedPreset = null;
+                $scope.selectedPresetPath = 'Select Preset';
+
+                $scope.presetSelected = function(preset) {
+                  $scope.selectedPreset = preset;
+                  $scope.selectedPresetPath = preset.path;
+                  $scope.isTemplateSelected = true;
+                }
+
+                $scope.load = function() {
+                  git.getPreset($scope.selectedPreset.url).then(function (response) {
+                    $scope.theme = JSON.parse(atob(response));
+                  })
+                }
+                // $scope.theme = {
+              	// 	black:        "#272822",
+              	// 	dark_blue:    "#66d9ef",
+              	// 	dark_green:   "#a6e22e",
+              	// 	dark_cyan:    "#a1efe4",
+              	// 	dark_red:     "#f92672",
+              	// 	dark_magenta: "#ae81ff",
+              	// 	dark_yellow:  "#fd971f",
+              	// 	gray:         "#f5f4f1",
+              	// 	dark_gray:    "#878782",
+              	// 	blue:         "#a59f85",
+              	// 	green:        "#49483e",
+              	// 	cyan:         "#f8f8f2",
+              	// 	red:          "#f4bf75",
+              	// 	magenta:      "#cc6633",
+              	// 	yellow:       "#bab8ae",
+              	// 	white:        "#f9f8f5",
+              	// 	screen_colors: "cyan,black",
+              	// 	popup_colors:  "black,cyan"
+              	// }
+                $scope.invertColor = function (hexTripletColor) {
+                  var color = hexTripletColor;
+                  color = color.substring(1);           // remove #
+                  color = parseInt(color, 16);          // convert to integer
+                  color = 0xFFFFFF ^ color;             // invert three bytes
+                  color = color.toString(16);           // convert to hex
+                  color = ("000000" + color).slice(-6); // pad with leading zeros
+                  color = "#" + color;                  // prepend #
+                  return color;
+                }
+              }])
         </script>
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
         <style media="screen">
@@ -37,7 +164,7 @@
           }
           .textarea {
             width: 100%;
-            height: 50%;
+            height: 100%;
             font-family: monospace;
           }
           .swatch {
@@ -56,57 +183,65 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12 col-sm-12">
-            <textarea class=textarea name="txtJson" id="" cols="30" rows="20" ng-model="txt"></textarea>
+            <div class="well well-succces">
+              <div class="btn-group" uib-dropdown is-open="status.isopen">
+                <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                  {{selectedPresetPath}} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                  <li role="menuitem" ng-if="!presets"><a href="#">Loading ...</a></li>
+                  <li role="menuitem" ng-repeat="preset in presets" ng-click="presetSelected(preset)"><a href="#">{{preset.path}}</a></li>
+                </ul>
+              </div>
+              <button type="button" class="btn btn-primary" ng-disabled="!isTemplateSelected" ng-click="load()">Load It!</button>
+            </div>
           </div>
-          <div class="col-md-12 col-sm-12">
-            <button type="button" class="btn btn-primary" ng-click="load()">Load It!</button>
-          </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.black}}; color : {{theme.black?invertColor(theme.black):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.black}}; color : {{theme.black?invertColor(theme.black):'#000000'}}">
             <span>Black</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.dark_blue}}; color : {{theme.black?invertColor(theme.dark_blue):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.dark_blue}}; color : {{theme.black?invertColor(theme.dark_blue):'#000000'}}">
             <span>Dark Blue</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.dark_green}}; color : {{theme.black?invertColor(theme.dark_blue):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.dark_green}}; color : {{theme.black?invertColor(theme.dark_blue):'#000000'}}">
             <span>Dark Green</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.dark_cyan}}; color : {{theme.black?invertColor(theme.dark_cyan):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.dark_cyan}}; color : {{theme.black?invertColor(theme.dark_cyan):'#000000'}}">
             <span>Dark Cyan</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.dark_red}}; color : {{theme.black?invertColor(theme.dark_red):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.dark_red}}; color : {{theme.black?invertColor(theme.dark_red):'#000000'}}">
             <span>Dark Red</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.dark_magenta}}; color : {{theme.black?invertColor(theme.dark_magenta):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.dark_magenta}}; color : {{theme.black?invertColor(theme.dark_magenta):'#000000'}}">
             <span>Dark Magenta</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.dark_yellow}}; color : {{theme.black?invertColor(theme.dark_yellow):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.dark_yellow}}; color : {{theme.black?invertColor(theme.dark_yellow):'#000000'}}">
             <span>Dark Yellow</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.dark_gray}}; color : {{theme.black?invertColor(theme.dark_gray):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.dark_gray}}; color : {{theme.black?invertColor(theme.dark_gray):'#000000'}}">
             <span>Dark Gray</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.gray}}; color : {{theme.black?invertColor(theme.gray):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.gray}}; color : {{theme.black?invertColor(theme.gray):'#000000'}}">
             <span>Gray</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.blue}}; color : {{theme.black?invertColor(theme.blue):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.blue}}; color : {{theme.black?invertColor(theme.blue):'#000000'}}">
             <span>Blue</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.green}}; color : {{theme.black?invertColor(theme.green):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.green}}; color : {{theme.black?invertColor(theme.green):'#000000'}}">
             <span>Green</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.cyan}}; color : {{theme.black?invertColor(theme.cyan):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.cyan}}; color : {{theme.black?invertColor(theme.cyan):'#000000'}}">
             <span>Cyan</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.red}}; color : {{theme.black?invertColor(theme.red):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.red}}; color : {{theme.black?invertColor(theme.red):'#000000'}}">
             <span>Red</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.magenta}}; color : {{theme.black?invertColor(theme.magenta):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.magenta}}; color : {{theme.black?invertColor(theme.magenta):'#000000'}}">
             <span>Magenta</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.yellow}}; color : {{theme.black?invertColor(theme.yellow):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.yellow}}; color : {{theme.black?invertColor(theme.yellow):'#000000'}}">
             <span>Yellow</span>
           </div>
-          <div class="col-md-3 col-sm-6 swatch" style="background-color: {{theme.white}}; color : {{theme.black?invertColor(theme.white):'#000000'}}">
+          <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.white}}; color : {{theme.black?invertColor(theme.white):'#000000'}}">
             <span>White</span>
           </div>
         </div>
