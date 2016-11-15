@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="mainApp">
+<html ng-app="mainApp" ng-cloak>
     <head>
         <title>PS Theme Viewer</title>
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -177,6 +177,10 @@
             display: block;
             text-align: center;
           }
+
+          li[ng-click] {
+            cursor: pointer;
+          }
         </style>
     </head>
     <body ng-controller="mainController">
@@ -197,52 +201,52 @@
             </div>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.black}}; color : {{theme.black?invertColor(theme.black):'#000000'}}">
-            <span>Black</span>
+            <span>Black - {{theme.black}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.dark_blue}}; color : {{theme.black?invertColor(theme.dark_blue):'#000000'}}">
-            <span>Dark Blue</span>
+            <span>Dark Blue - {{theme.dark_blue}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.dark_green}}; color : {{theme.black?invertColor(theme.dark_blue):'#000000'}}">
-            <span>Dark Green</span>
+            <span>Dark Green - {{theme.dark_green}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.dark_cyan}}; color : {{theme.black?invertColor(theme.dark_cyan):'#000000'}}">
-            <span>Dark Cyan</span>
+            <span>Dark Cyan - {{theme.dark_cyan}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.dark_red}}; color : {{theme.black?invertColor(theme.dark_red):'#000000'}}">
-            <span>Dark Red</span>
+            <span>Dark Red - {{theme.dark_red}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.dark_magenta}}; color : {{theme.black?invertColor(theme.dark_magenta):'#000000'}}">
-            <span>Dark Magenta</span>
+            <span>Dark Magenta - {{theme.dark_magenta}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.dark_yellow}}; color : {{theme.black?invertColor(theme.dark_yellow):'#000000'}}">
-            <span>Dark Yellow</span>
+            <span>Dark Yellow - {{theme.dark_yellow}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.dark_gray}}; color : {{theme.black?invertColor(theme.dark_gray):'#000000'}}">
-            <span>Dark Gray</span>
+            <span>Dark Gray - {{theme.dark_gray}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.gray}}; color : {{theme.black?invertColor(theme.gray):'#000000'}}">
-            <span>Gray</span>
+            <span>Gray - {{theme.gray}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.blue}}; color : {{theme.black?invertColor(theme.blue):'#000000'}}">
-            <span>Blue</span>
+            <span>Blue - {{theme.blue}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.green}}; color : {{theme.black?invertColor(theme.green):'#000000'}}">
-            <span>Green</span>
+            <span>Green - {{theme.green}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.cyan}}; color : {{theme.black?invertColor(theme.cyan):'#000000'}}">
-            <span>Cyan</span>
+            <span>Cyan - {{theme.cyan}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.red}}; color : {{theme.black?invertColor(theme.red):'#000000'}}">
-            <span>Red</span>
+            <span>Red - {{theme.red}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.magenta}}; color : {{theme.black?invertColor(theme.magenta):'#000000'}}">
-            <span>Magenta</span>
+            <span>Magenta - {{theme.magenta}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.yellow}}; color : {{theme.black?invertColor(theme.yellow):'#000000'}}">
-            <span>Yellow</span>
+            <span>Yellow - {{theme.yellow}}</span>
           </div>
           <div class="col-md-3 col-xs-6 swatch" style="background-color: {{theme.white}}; color : {{theme.black?invertColor(theme.white):'#000000'}}">
-            <span>White</span>
+            <span>White - {{theme.white}}</span>
           </div>
         </div>
       </div>
