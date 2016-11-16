@@ -7,6 +7,8 @@ If you have [Scoop](http://scoop.sh), you can install concfg with `scoop install
 ### Important Caveats
 * Console settings can be overridden by program- or shortcut-specific settings stored in the registry or in the .lnk file itself. Concfg can attempt to clean these up for you by removing registry settings that might conflict and removing console properties from .lnk files in known directories. `concfg import` will prompt you to clean these up after an import, or you can run `concfg clean` at any time. 
 
+[Screenshots of included presets](./preset_examples/README.md)
+
 ### Examples
 
 ##### Presets
