@@ -1,0 +1,26 @@
+# Automated Screenshots of included Presets
+
+{% for image in images %}
+## {{ image.name }}
+
+![{{ image.name }}](./{{ image.path }} "{{ image.name }}")
+{% endfor %}
+
+# Generate Windows to perform Screenshots
+
+1. Open powershell and navigate to the directory that contains `outcolors.ps1` and `theme-output-comparison.ps1`.
+2. execute `theme-output-comparison.ps1` 
+3. Wait for all presets to finish.
+4. Take screenshots of each screen cropping out prompt.
+
+# Generating README
+
+## requirements
+
+1. python 3.5
+2. jinja2
+
+## generation
+
+1. open terminal to folder containing all images.
+2. run `python gen_readme.py`
