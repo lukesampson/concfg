@@ -1,0 +1,32 @@
+* {
+  font-family: 'Fira Sans', sans-serif;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 20px 0;
+  box-sizing: border-box;
+}
+.swatch {
+  padding: 5px 5px 0;
+  border: 1px solid #cfcfcf;
+  border-radius: 8px;
+  background-color: #fff;
+  margin: 5px -10px;
+}
+.swatch-color {
+  height: 72px;
+  border-radius: 3px 3px 0 0;
+  border: 1px solid #000;
+}
+.swatch-title {
+  padding: 15px;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+li[ng-click] {
+  cursor: pointer;
+}
