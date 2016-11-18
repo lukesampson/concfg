@@ -7,11 +7,11 @@ body {
   padding: 0;
 }
 body {
-  margin: 20px 0;
+  margin: 20px 0 0;
   box-sizing: border-box;
 }
 .swatch {
-  padding: 5px 5px 0;
+  padding: 0 10px;
   border: 1px solid #cfcfcf;
   border-radius: 8px;
   background-color: #fff;
@@ -19,12 +19,40 @@ body {
 }
 .swatch-color {
   height: 72px;
-  border-radius: 3px 3px 0 0;
+  border-radius: 36px;
   border: 1px solid #000;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.swatch-color .swatch-color-tile {
+  width: 50%;
+  height: 100%;
+  float: left;
+}
+.swatch-color .swatch-color-tile .swatch-color-tile-edited {
+  float: right;
+  width: 52px;
+  height: 52px;
+  border-radius: 26px;
+  border: 1px solid #000;
+  margin-top: 9px;
+  margin-right: 9px;
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: center;
+  line-height: 54px;
+  font-size: 24px;
+  padding-left: 2px;
 }
 .swatch-title {
-  padding: 15px;
+  padding: 10px 5px 5px;
   font-size: 1.2em;
+  font-weight: 700;
+  text-align: center;
+}
+.swatch-color-code {
+  padding: 5px 5px 10px;
   font-weight: 500;
 }
 li[ng-click] {

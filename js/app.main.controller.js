@@ -22,7 +22,12 @@
                 "white":        "#ffffff"
             }
 
-            $scope.theme = defaultPreset;
+            $scope.preset = {};
+
+            $scope.defaultPreset = {};
+            
+            angular.copy(defaultPreset, $scope.preset);
+            angular.copy(defaultPreset, $scope.defaultPreset);
 
             $scope.hasColors = true;
         
@@ -35,17 +40,6 @@
             $scope.selectedPreset = null;
             $scope.selectedPresetPath = 'Select Preset';
 
-            git.getBranch().then(function(response) {
-                console.log('retrieved branch');
-                git.getBranchTree().then(function (response) {
-                    console.log('retrieved branch tree');
-                    git.getPresetList().then(function(response) {
-                        console.log('retrieved ' + response.length + ' presets.');
-                        $scope.presets = response;
-                    });
-                });
-            });
-
             $scope.presetSelected = function(preset) {
                 $scope.selectedPreset = preset;
                 $scope.selectedPresetPath = preset.path;
@@ -57,28 +51,28 @@
                     var decodedContent = atob(content);
                     console.log('retrieved preset ' + $scope.selectedPreset.path);
                     console.log(decodedContent);
-                    $scope.theme = JSON.parse(decodedContent);
-                    $scope.hasColors =  $scope.theme.black || 
-                                        $scope.theme.dark_blue ||
-                                        $scope.theme.dark_green ||
-                                        $scope.theme.dark_cyan ||
-                                        $scope.theme.dark_red ||
-                                        $scope.theme.dark_magenta ||
-                                        $scope.theme.dark_yellow ||
-                                        $scope.theme.dark_gray ||
-                                        $scope.theme.gray ||
-                                        $scope.theme.blue ||
-                                        $scope.theme.green ||
-                                        $scope.theme.cyan ||
-                                        $scope.theme.red ||
-                                        $scope.theme.magenta ||
-                                        $scope.theme.yellow ||
-                                        $scope.theme.white;
+                    $scope.preset = JSON.parse(decodedContent);
+                    $scope.hasColors =  $scope.preset.black || 
+                                        $scope.preset.dark_blue ||
+                                        $scope.preset.dark_green ||
+                                        $scope.preset.dark_cyan ||
+                                        $scope.preset.dark_red ||
+                                        $scope.preset.dark_magenta ||
+                                        $scope.preset.dark_yellow ||
+                                        $scope.preset.dark_gray ||
+                                        $scope.preset.gray ||
+                                        $scope.preset.blue ||
+                                        $scope.preset.green ||
+                                        $scope.preset.cyan ||
+                                        $scope.preset.red ||
+                                        $scope.preset.magenta ||
+                                        $scope.preset.yellow ||
+                                        $scope.preset.white;
 
                 });
             }
 
-            $scope.invertColor = function (hexTripletColor) {
+            var invertColor = function (hexTripletColor) {
                 var color = hexTripletColor;
                 color = color.substring(1);           // remove #
                 color = parseInt(color, 16);          // convert to integer
@@ -88,5 +82,26 @@
                 color = "#" + color;                  // prepend #
                 return color;
             }
+
+            $scope.invertColor = invertColor;
+
+            $scope.editColor = function(colorHex) {
+                console.log(colorHex);
+            }
+
+            $scope.borderColor = function(colorHex) {
+                return parseInt(colorHex.substring(1), 16)>=0x7F7F7F?"black":"white";
+            }
+
+            git.getBranch().then(function(response) {
+                console.log('retrieved branch');
+                git.getBranchTree().then(function (response) {
+                    console.log('retrieved branch tree');
+                    git.getPresetList().then(function(response) {
+                        console.log('retrieved ' + response.length + ' presets.');
+                        $scope.presets = response;
+                    });
+                });
+            });
         }]);
 })();
