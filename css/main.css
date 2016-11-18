@@ -45,6 +45,9 @@ body {
   font-size: 24px;
   padding-left: 2px;
 }
+.swatch-color .swatch-color-tile .swatch-color-tile-edited span.glyphicon {
+  line-height: 54px;
+}
 .swatch-title {
   padding: 10px 5px 5px;
   font-size: 1.2em;
