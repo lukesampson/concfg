@@ -86,11 +86,17 @@
             $scope.invertColor = invertColor;
 
             $scope.editColor = function(colorHex) {
-                console.log(colorHex);
+                var red = colorHex.substring(1).substring(0,2);
+                var green = colorHex.substring(1).substring(2,4);
+                var blue = colorHex.substring(1).substring(4,6);
+                console.log(red,green,blue);
             }
 
             $scope.borderColor = function(colorHex) {
-                return parseInt(colorHex.substring(1), 16)>=0x7F7F7F?"black":"white";
+                var red = parseInt(colorHex.substring(1).substring(0,2), 16);
+                var green = parseInt(colorHex.substring(1).substring(2,4), 16);
+                var blue = parseInt(colorHex.substring(1).substring(4,6), 16);
+                return red > 0x80 || green > 0x80 || blue > 0x80 ? (red === 0x00 && green === 0x00 || red === 0x00 && blue === 0x00 || green === 0x00 && blue === 0x00) ? "white" : "black" : "white";
             }
 
             git.getBranch().then(function(response) {
