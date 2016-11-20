@@ -17,6 +17,10 @@
   ],
   "dependencies": {
     "angular": "^1.5.8",
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "angular-animate": "^1.5.8",
+    "angular-bootstrap": "^2.2.0",
+    "angular-touch": "^1.5.8",
+    "jquery": "^3.1.1"
   }
 }

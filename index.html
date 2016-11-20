@@ -9,110 +9,120 @@
         <script src="bower_components/angular/angular.min.js"></script>
         <script src="bower_components/angular-animate/angular-animate.min.js"></script>
         <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-        <script src="js/app.js"></script>
-        <script src="js/app.gitService.provider.js"></script>
-        <script src="js/app.main.controller.js"></script>
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="css/main.css" />
+        <script src="js/app.min.js"></script>
+        <script src="js/app.gitService.provider.min.js"></script>
+        <script src="js/app.main.controller.min.js"></script>
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/main.min.css"/>
         <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500,700" rel="stylesheet">
     </head>
     <body ng-controller="mainController">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12 col-sm-12">
-            <div class="well">
-              <div class="btn-group" uib-dropdown is-open="status.isopen">
-                <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-                  {{selectedPresetPath}} <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                  <li role="menuitem" ng-if="!presets"><a href="#">Loading ...</a></li>
-                  <li role="menuitem" ng-repeat="preset in presets" ng-click="presetSelected(preset)"><a>{{preset.path}}</a></li>
-                </ul>
-              </div>
-              <button type="button" class="btn btn-primary" ng-disabled="!isTemplateSelected" ng-click="load()">Load Selected</button>
-              <button type="button" class="btn btn-warning" ng-disabled="!isEdited" ng-click="resetEdits()">Reset Edits</button>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-8">
-            <div class="well well-sm">
-              <div class="container-fluid" ng-if="hasColors">
-                <div class="row">
-                  <div class="col-md-3 col-sm-12 col-xs-12" ng-repeat="colorKey in colorKeys">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>{{colorKey.displayName}}</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset[colorKey.key]}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset[colorKey.key]}};"></div>
-                        <div class="swatch-color-edit-container">
-                          <div class="swatch-color-edited" ng-click="editColor(colorKey)" 
-                            style="background-color: {{presetEdited[colorKey.key]}}; border-color: {{borderColor(presetEdited[colorKey.key])}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(presetEdited[colorKey.key])}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset[colorKey.key] | uppercase}}</span>
-                        <span class="pull-right"><strong>Edited</strong><br />{{presetEdited[colorKey.key] | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div ng-if="!hasColors">
-                There are no colors in the selected preset.
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
+        <div class="container-fluid">
             <div class="row">
-              <div class="col-md-12">
-                <div class="well well-sm">
-                  <div class="well-sm">
-                    <strong>Color Editor</strong>
-                  </div>
-                  <div class="row" ng-if="!colorToEdit">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="well-sm">
-                        Select a color to Edit
-                      </div>
+                <div class="col-md-12 col-sm-12">
+                    <div class="well">
+                        <div class="btn-group" uib-dropdown is-open="status.isopen">
+                            <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                                {{selectedPresetPath}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem" ng-if="!presets">
+                                    <a href="#">Loading ...</a>
+                                </li>
+                                <li role="menuitem" ng-repeat="preset in presets" ng-click="presetSelected(preset)">
+                                    <a>{{preset.path}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn btn-primary" ng-disabled="!isTemplateSelected" ng-click="load()">Load Selected</button>
+                        <button type="button" class="btn btn-warning" ng-disabled="!isEdited" ng-click="resetEdits()">Reset Edits</button>
                     </div>
-                  </div>
-                  <div class="row editor" ng-show="colorToEdit">
-                    <div class="col-md-12 col-sm-12 col-xs-12 picker">
-                      <div class="well well-sm">
-                        <canvas id="colorPicker" width="2400" height="960"></canvas>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 picker">
-                      <div class="well well-sm">
-                        <label for="colorInput">RGB Hex: </label>
-                        <input type="text" class="colorInput" name="colorInput" id="colorInput" ng-model="colorToEdit"></input>
-                        <div style="background-color:{{colorToEdit}};">&nbsp;</div>
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <button class="btn btn-success pull-left" ng-click="editDone()">Done</button>
-                      <button class="btn btn-danger pull-right" ng-click="editCancel()">Cancel</button>
-                    </div>
-                  </div>
-                </div>              
-              </div>
-              <div class="col-md-12">
-                <div class="well well-sm">
-                  <div class="well-sm">
-                    <strong>Preview</strong>
-                  </div>
                 </div>
-              </div>
             </div>
-          </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="well well-sm">
+                        <div class="container-fluid" ng-if="hasColors">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-12 col-xs-12" ng-repeat="colorKey in colorKeys">
+                                    <div class="row swatch">
+                                        <div class="col-sm-12 swatch-title">
+                                            <span>{{colorKey.displayName}}</span>
+                                        </div>
+                                        <div class="col-md-12 swatch-color">
+                                            <div class="swatch-color-tile" style="background-color: {{::defaultPreset[colorKey.key]}};"></div>
+                                            <div class="swatch-color-tile" style="background-color: {{preset[colorKey.key]}};"></div>
+                                            <div class="swatch-color-edit-container">
+                                                <div class="swatch-color-edited" ng-click="editColor(colorKey)" style="background-color: {{presetEdited[colorKey.key]}}; border-color: {{borderColor(presetEdited[colorKey.key])}};">
+                                                    <span class="glyphicon glyphicon-edit" style="color: {{borderColor(presetEdited[colorKey.key])}};"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 swatch-color-code">
+                                            <span class="pull-left">
+                                                <strong>Default</strong><br/>{{::defaultPreset[colorKey.key] | uppercase}}</span>
+                                            <span class="pull-right">
+                                                <strong>Edited</strong><br/>{{presetEdited[colorKey.key] | uppercase}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="!hasColors">
+                            There are no colors in the selected preset.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="well well-sm">
+                                <div class="well-sm">
+                                    <strong>Color Editor</strong>
+                                    <strong ng-if="colorToEdit">
+                                        -
+                                        {{colorKey.displayName}}</strong>
+                                </div>
+                                <div class="row" ng-if="!colorToEdit">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="well-sm">
+                                            Select a color to Edit
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row editor" ng-show="colorToEdit">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 picker">
+                                        <div class="well well-sm">
+                                            <canvas id="colorPicker" width="2400" height="960"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 picker">
+                                        <div class="well well-sm">
+                                            <label for="colorInput">RGB Hex:
+                                            </label>
+                                            <input type="text" class="colorInput" name="colorInput" id="colorInput" ng-model="colorToEdit"/>
+                                            <div style="background-color:{{colorToEdit}};">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <button class="btn btn-success pull-left" ng-click="editDone()">Done</button>
+                                        <button class="btn btn-danger pull-right" ng-click="editCancel()">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="well well-sm">
+                                <div class="well-sm">
+                                    <strong>Preview</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </body>
 </html>

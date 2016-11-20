@@ -17,7 +17,7 @@
             var baseRequest = {
                 method: 'GET',
                 params: gitCredentials
-            }
+            };
 
             // provider
             this.$get = ['$http', function($http) {
@@ -27,56 +27,56 @@
                 service.getBranch = function() {
                     var requestBranch = {};
                     angular.copy(baseRequest, requestBranch);
-                    requestBranch.url = 'https://api.github.com/repos/MindzGroupTechnologies/concfg/branches/master';
+                    requestBranch.url =
+                        'https://api.github.com/repos/MindzGroupTechnologies/concfg/branches/master';
 
                     return $http(requestBranch).then(function(response) {
                         gitBranchTreeUrl = response.data.commit.commit.tree.url;
                         return true;
                     });
-                }
+                };
 
-                service.getBranchTree = function () {
+                service.getBranchTree = function() {
                     var requestBranchTree = {};
                     angular.copy(baseRequest, requestBranchTree);
                     requestBranchTree.url = gitBranchTreeUrl;
 
-                    return $http(requestBranchTree).then(function (response) {
-                        response.data.tree.forEach(function (item) {
-                            if(item.path == 'presets') {
+                    return $http(requestBranchTree).then(function(response) {
+                        response.data.tree.forEach(function(item) {
+                            if (item.path == 'presets') {
                                 presetFolderUrl = item.url;
                             }
                         });
-                      
-                        if(presetFolderUrl) { 
+
+                        if (presetFolderUrl) {
                             return true;
-                        }
-                        else { 
+                        } else {
                             return false;
                         }
                     });
-                }
+                };
 
                 service.getPresetList = function() {
                     var requestPresetFolderTree = {};
                     angular.copy(baseRequest, requestPresetFolderTree);
                     requestPresetFolderTree.url = presetFolderUrl;
 
-                    return $http(requestPresetFolderTree).then(function (response) {
+                    return $http(requestPresetFolderTree).then(function(response) {
                         return response.data.tree;
                     });
-                }
+                };
 
                 service.getPreset = function(url) {
                     var requestPreset = {};
                     angular.copy(baseRequest, requestPreset);
                     requestPreset.url = url;
 
-                    return $http(requestPreset).then(function (response) {
+                    return $http(requestPreset).then(function(response) {
                         return response.data.content;
                     });
-                }
+                };
 
                 return service;
-            }]
+            }];
         });
 })();

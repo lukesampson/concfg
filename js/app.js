@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    
+
     angular.module('mainApp', ['ui.bootstrap'])
         .run(function() {
             var imageObj = new Image();
@@ -34,8 +34,8 @@
                     var imageData = context.getImageData(cordinates.x, cordinates.y, 1, 1);
                     var data = imageData.data;
                     var colorHex = '#' +
-                        ("00" + data[0].toString(16)).slice(-2) + 
-                        ("00" + data[1].toString(16)).slice(-2) + 
+                        ("00" + data[0].toString(16)).slice(-2) +
+                        ("00" + data[1].toString(16)).slice(-2) +
                         ("00" + data[2].toString(16)).slice(-2);
                         $('#colorInput').val(colorHex);
                         $('#colorInput').trigger('input');
