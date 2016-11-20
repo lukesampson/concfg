@@ -52,6 +52,7 @@ body {
   line-height: 54px;
   font-size: 24px;
   padding-left: 2px;
+  padding-top: 1px;
 }
 .swatch-title {
   padding: 10px 5px 5px;
