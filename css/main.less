@@ -1,5 +1,6 @@
 * {
     font-family: 'Fira Sans', sans-serif;
+    font-weight: normal;
 }
 
 html, body {
@@ -26,21 +27,28 @@ body {
     border: 1px solid #000;
     padding: 0;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: hidden;    
     .swatch-color-tile {
         width: 50%;
         height: 100%;
         float: left;
-        .swatch-color-tile-edited {
-            float: right;
+    }
+    .swatch-color-edit-container {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin-left: 0;
+        max-width: 100%;
+        padding: 9px;
+        .swatch-color-edited {
             width: 52px;
             height: 52px;
             border-radius: 26px;
             border: 1px solid #000;
-            margin-top: 9px;
-            margin-right: 9px;
             box-sizing: border-box;
-            cursor: pointer; 
+            cursor: pointer;
             text-align: center;
             line-height: 54px;
             font-size: 24px;
@@ -63,4 +71,34 @@ body {
 
 li[ng-click] {
     cursor: pointer;
+}
+
+.editor {
+    .picker {
+        canvas { 
+            width:100%;
+            display: inherit;
+        }
+        .colorInput {
+            border: 1px solid #cfcfcf;
+            border-radius: 4px;
+            font-family: 'Fira Mono';
+            line-height: 32px;
+            font-size: 1.1em;
+            padding: 0 10px;
+            outline: none;
+            &+ div {
+                display: inline-block;
+                width: 20px;
+                line-height: 20px;
+                max-height: 20px;
+                border: 1px solid #cfcfcf;
+                border-radius: 10px;
+            }
+        }
+    }
+}
+
+.pull-right {
+    text-align: right;
 }

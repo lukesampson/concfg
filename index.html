@@ -14,6 +14,7 @@
         <script src="js/app.main.controller.js"></script>
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="css/main.css" />
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500,700" rel="stylesheet">
     </head>
     <body ng-controller="mainController">
@@ -30,7 +31,8 @@
                   <li role="menuitem" ng-repeat="preset in presets" ng-click="presetSelected(preset)"><a>{{preset.path}}</a></li>
                 </ul>
               </div>
-              <button type="button" class="btn btn-primary" ng-disabled="!isTemplateSelected" ng-click="load()">Load It!</button>
+              <button type="button" class="btn btn-primary" ng-disabled="!isTemplateSelected" ng-click="load()">Load Selected</button>
+              <button type="button" class="btn btn-warning" ng-disabled="!isEdited" ng-click="resetEdits()">Reset Edits</button>
             </div>
           </div>
         </div>
@@ -39,307 +41,24 @@
             <div class="well well-sm">
               <div class="container-fluid" ng-if="hasColors">
                 <div class="row">
-                  <div class="col-md-3 col-sm-12 col-xs-12">
+                  <div class="col-md-3 col-sm-12 col-xs-12" ng-repeat="colorKey in colorKeys">
                     <div class="row swatch">
                       <div class="col-sm-12 swatch-title">
-                        <span>Black</span>
+                        <span>{{colorKey.displayName}}</span>
                       </div>
                       <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.black}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.black}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.black)" style="background-color: {{preset.black}}; border-color: {{borderColor(preset.black)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.black)}};"></span>
+                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset[colorKey.key]}};"></div>
+                        <div class="swatch-color-tile" style="background-color: {{preset[colorKey.key]}};"></div>
+                        <div class="swatch-color-edit-container">
+                          <div class="swatch-color-edited" ng-click="editColor(colorKey)" 
+                            style="background-color: {{presetEdited[colorKey.key]}}; border-color: {{borderColor(presetEdited[colorKey.key])}};">
+                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(presetEdited[colorKey.key])}};"></span>
                           </div>
                         </div>
                       </div>
                       <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.black | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.black | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>White</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.white}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.white}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.white)" style="background-color: {{preset.white}}; border-color: {{borderColor(preset.white)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.white)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.white | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.white | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>Dark Blue</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.dark_blue}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.dark_blue}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.dark_blue)" style="background-color: {{preset.dark_blue}}; border-color: {{borderColor(preset.dark_blue)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.dark_blue)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.dark_blue | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.dark_blue | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>Blue</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.blue}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.blue}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.blue)" style="background-color: {{preset.blue}}; border-color: {{borderColor(preset.blue)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.blue)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.blue | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.blue | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>Dark Green</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.dark_green}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.dark_green}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.dark_green)" style="background-color: {{preset.dark_green}}; border-color: {{borderColor(preset.dark_green)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.dark_green)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.dark_green | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.dark_green | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>Green</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.green}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.green}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.green)" style="background-color: {{preset.green}}; border-color: {{borderColor(preset.green)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.green)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.green | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.green | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>Dark Cyan</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.dark_cyan}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.dark_cyan}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.dark_cyan)" style="background-color: {{preset.dark_cyan}}; border-color: {{borderColor(preset.dark_cyan)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.dark_cyan)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.dark_cyan | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.dark_cyan | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>Cyan</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.cyan}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.cyan}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.cyan)" style="background-color: {{preset.cyan}}; border-color: {{borderColor(preset.cyan)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.cyan)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.cyan | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.cyan | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>Dark Red</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.dark_red}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.dark_red}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.dark_red)" style="background-color: {{preset.dark_red}}; border-color: {{borderColor(preset.dark_red)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.dark_red)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.dark_red | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.dark_red | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>Red</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.red}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.red}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.red)" style="background-color: {{preset.red}}; border-color: {{borderColor(preset.red)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.red)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.red | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.red | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>Dark Magenta</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.dark_magenta}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.dark_magenta}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.dark_magenta)" style="background-color: {{preset.dark_magenta}}; border-color: {{borderColor(preset.dark_magenta)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.dark_magenta)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.dark_magenta | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.dark_magenta | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>Magenta</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.magenta}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.magenta}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.magenta)" style="background-color: {{preset.magenta}}; border-color: {{borderColor(preset.magenta)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.magenta)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.magenta | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.magenta | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>Dark Yellow</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.dark_yellow}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.dark_yellow}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.dark_yellow)" style="background-color: {{preset.dark_yellow}}; border-color: {{borderColor(preset.dark_yellow)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.dark_yellow)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.dark_yellow | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.dark_yellow | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>Yellow</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.yellow}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.yellow}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.yellow)" style="background-color: {{preset.yellow}}; border-color: {{borderColor(preset.yellow)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.yellow)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.yellow | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.yellow | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>Dark Gray</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.dark_gray}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.dark_gray}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.dark_gray)" style="background-color: {{preset.dark_gray}}; border-color: {{borderColor(preset.dark_gray)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.dark_gray)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.dark_gray | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.dark_gray | uppercase}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="row swatch">
-                      <div class="col-sm-12 swatch-title">
-                        <span>Gray</span>
-                      </div>
-                      <div class="col-md-12 swatch-color">
-                        <div class="swatch-color-tile" style="background-color: {{::defaultPreset.gray}};"></div>
-                        <div class="swatch-color-tile" style="background-color: {{preset.gray}};">
-                          <div class="swatch-color-tile-edited" ng-click="editColor(preset.gray)" style="background-color: {{preset.gray}}; border-color: {{borderColor(preset.gray)}};">
-                            <span class="glyphicon glyphicon-edit" style="color: {{borderColor(preset.gray)}};"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 swatch-color-code">
-                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset.gray | uppercase}}</span>
-                        <span class="pull-right"><strong>Selected</strong><br />{{preset.gray | uppercase}}</span>
+                        <span class="pull-left"><strong>Default</strong><br />{{::defaultPreset[colorKey.key] | uppercase}}</span>
+                        <span class="pull-right"><strong>Edited</strong><br />{{presetEdited[colorKey.key] | uppercase}}</span>
                       </div>
                     </div>
                   </div>
@@ -351,8 +70,46 @@
             </div>
           </div>
           <div class="col-md-4">
-            <div class="well well-sm">
-              Preview
+            <div class="row">
+              <div class="col-md-12">
+                <div class="well well-sm">
+                  <div class="well-sm">
+                    <strong>Color Editor</strong>
+                  </div>
+                  <div class="row" ng-if="!colorToEdit">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="well-sm">
+                        Select a color to Edit
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row editor" ng-show="colorToEdit">
+                    <div class="col-md-12 col-sm-12 col-xs-12 picker">
+                      <div class="well well-sm">
+                        <canvas id="colorPicker" width="2400" height="960"></canvas>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 picker">
+                      <div class="well well-sm">
+                        <label for="colorInput">RGB Hex: </label>
+                        <input type="text" class="colorInput" name="colorInput" id="colorInput" ng-model="colorToEdit"></input>
+                        <div style="background-color:{{colorToEdit}};">&nbsp;</div>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <button class="btn btn-success pull-left" ng-click="editDone()">Done</button>
+                      <button class="btn btn-danger pull-right" ng-click="editCancel()">Cancel</button>
+                    </div>
+                  </div>
+                </div>              
+              </div>
+              <div class="col-md-12">
+                <div class="well well-sm">
+                  <div class="well-sm">
+                    <strong>Preview</strong>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
