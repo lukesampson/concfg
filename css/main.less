@@ -1,9 +1,11 @@
+// out: main.css, sourcemap: false, compress: false
 * {
     font-family: 'Fira Sans', sans-serif;
     font-weight: normal;
 }
 
-html, body {
+body,
+html {
     margin: 0;
     padding: 0;
 }
@@ -27,12 +29,14 @@ body {
     border: 1px solid #000;
     padding: 0;
     box-sizing: border-box;
-    overflow: hidden;    
+    overflow: hidden;
+
     .swatch-color-tile {
         width: 50%;
         height: 100%;
         float: left;
     }
+
     .swatch-color-edit-container {
         display: inline-block;
         position: absolute;
@@ -42,6 +46,7 @@ body {
         margin-left: 0;
         max-width: 100%;
         padding: 9px;
+
         .swatch-color-edited {
             width: 52px;
             height: 52px;
@@ -50,10 +55,12 @@ body {
             box-sizing: border-box;
             cursor: pointer;
             text-align: center;
-            line-height: 54px;
             font-size: 24px;
             padding-left: 2px;
-            padding-top: 1px;
+            .glyphicon {
+                top:0;
+                line-height: 49px;
+            }
         }
     }
 }
@@ -76,10 +83,11 @@ li[ng-click] {
 
 .editor {
     .picker {
-        canvas { 
-            width:100%;
+        canvas {
+            width: 100%;
             display: inherit;
         }
+
         .colorInput {
             border: 1px solid #cfcfcf;
             border-radius: 4px;
@@ -88,6 +96,7 @@ li[ng-click] {
             font-size: 1.1em;
             padding: 0 10px;
             outline: none;
+
             &+ div {
                 display: inline-block;
                 width: 20px;

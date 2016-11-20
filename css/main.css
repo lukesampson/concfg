@@ -2,8 +2,8 @@
   font-family: 'Fira Sans', sans-serif;
   font-weight: normal;
 }
-html,
-body {
+body,
+html {
   margin: 0;
   padding: 0;
 }
@@ -49,10 +49,12 @@ body {
   box-sizing: border-box;
   cursor: pointer;
   text-align: center;
-  line-height: 54px;
   font-size: 24px;
   padding-left: 2px;
-  padding-top: 1px;
+}
+.swatch-color .swatch-color-edit-container .swatch-color-edited .glyphicon {
+  top: 0;
+  line-height: 49px;
 }
 .swatch-title {
   padding: 10px 5px 5px;
