@@ -1,9 +1,4 @@
 // out: main.css, sourcemap: false, compress: false
-* {
-    font-family: 'Fira Sans', sans-serif;
-    font-weight: normal;
-}
-
 body,
 html {
     margin: 0;
@@ -13,6 +8,111 @@ html {
 body {
     margin: 20px 0 0;
     box-sizing: border-box;
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: normal;
+}
+
+.windowStyle {
+    width: 100%;
+
+    td {
+        text-align: center;
+
+        .cc {
+            padding: 0 2px;
+            > div {
+                display: block;
+                width: 100%;
+                margin: 0;
+                height: 35px;
+                border-radius: 4px;
+                border: 1px solid #000;
+                box-sizing: border-box;
+            }
+        }
+
+        .bg,
+        .fg {
+            input[type=radio] {
+                display: none;
+
+                &+label {
+                    cursor: pointer;
+                    display: block;
+                    width: 100%;
+                    position: relative;
+                    margin: 0;
+                    background: #808080;
+                    color: #fff;
+                    border-radius: 4px;
+                    border: 2px solid #f5f5f5;
+                    box-sizing: border-box;
+                    padding: 5px;
+                    font-weight: normal;
+                }
+            }
+        }
+
+        .fg {
+            input[type=radio] {
+                &+label {
+                    margin-bottom: 10px;
+
+                    &::after {
+                        content: '';
+                        width: 0;
+                        height: 0;
+                        border-left: 10px solid transparent;
+                        border-right: 10px solid transparent;
+                        border-top: 10px solid #808080;
+                        position: absolute;
+                        top: 100%;
+                        left: 50%;
+                        margin-left: -10px;
+                        display: none;
+                    }
+                }
+
+                &:checked {
+                    &+label {
+                        &::after {
+                            display: unset;
+                        }
+                    }
+                }
+            }
+        }
+
+        .bg {
+            input[type=radio] {
+                &+label {
+                    margin-top: 10px;
+
+                    &::before {
+                        content: '';
+                        width: 0;
+                        height: 0;
+                        border-left: 10px solid transparent;
+                        border-right: 10px solid transparent;
+                        border-bottom: 10px solid #808080;
+                        position: absolute;
+                        top: -10px;
+                        left: 50%;
+                        margin-left: -10px;
+                        display: none;
+                    }
+                }
+
+                &:checked {
+                    &+label {
+                        &::before {
+                            display: unset;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 .swatch {
@@ -41,9 +141,9 @@ body {
         display: inline-block;
         position: absolute;
         top: 0;
-        right: 0;
+        left: 50%;
         bottom: 0;
-        margin-left: 0;
+        margin-left: -35px;
         max-width: 100%;
         padding: 9px;
 
@@ -57,8 +157,9 @@ body {
             text-align: center;
             font-size: 24px;
             padding-left: 2px;
+
             .glyphicon {
-                top:0;
+                top: 0;
                 line-height: 49px;
             }
         }
@@ -75,6 +176,10 @@ body {
 .swatch-color-code {
     padding: 5px 5px 10px;
     font-weight: 500;
+    font-size: .8em;
+    span {
+        overflow: hidden;
+    }
 }
 
 li[ng-click] {
@@ -97,7 +202,7 @@ li[ng-click] {
             padding: 0 10px;
             outline: none;
 
-            &+ div {
+            &+div {
                 display: inline-block;
                 width: 20px;
                 line-height: 20px;
@@ -111,4 +216,19 @@ li[ng-click] {
 
 .pull-right {
     text-align: right;
+}
+
+.glyphicon {
+    &:before {
+        vertical-align: text-bottom;
+    }
+}
+
+.ps-window {
+    margin: 0 10px 10px;
+    padding: 2px;
+    border: 1px solid #000;
+    min-height: 300px;
+    font-size: .8em;
+    font-family: 'Fira Mono' !important;
 }

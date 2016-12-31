@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('mainApp')
-        .controller('mainController', ['$scope', 'gitService', function($scope, git) {
+        .controller('mainController', ['$scope', 'gitService', function ($scope, git) {
 
             var colorKeys = [{
                 'key': 'black',
@@ -71,28 +71,36 @@
             }];
 
             var defaultPreset = {
-                "black": "#000000",
-                "dark_blue": "#000080",
-                "dark_green": "#008000",
-                "dark_cyan": "#008080",
-                "dark_red": "#800000",
+                "black":        "#000000",
+                "dark_blue":    "#000080",
+                "dark_green":   "#008000",
+                "dark_cyan":    "#008080",
+                "dark_red":     "#800000",
                 "dark_magenta": "#800080",
-                "dark_yellow": "#808000",
-                "gray": "#c0c0c0",
-                "dark_gray": "#808080",
-                "blue": "#0000ff",
-                "green": "#00ff00",
-                "cyan": "#00ffff",
-                "red": "#ff0000",
-                "magenta": "#ff00ff",
-                "yellow": "#ffff00",
-                "white": "#ffffff",
-                "screen_colors": "cyan,black",
-                "popup_colors": "black,cyan"
+                "dark_yellow":  "#808000",
+                "gray":         "#c0c0c0",
+                "dark_gray":    "#808080",
+                "blue":         "#0000ff",
+                "green":        "#00ff00",
+                "cyan":         "#00ffff",
+                "red":          "#ff0000",
+                "magenta":      "#ff00ff",
+                "yellow":       "#ffff00",
+                "white":        "#ffffff",
+                "screen_colors": "gray,black",
+                "popup_colors":  "dark_magenta,white"
             };
+
+            var loadScreenColors = function (sourcePreset) {
+                if (sourcePreset.screen_colors) {
+                    var colors = sourcePreset.screen_colors.split(',');
+                    sourcePreset.screenColors = colors;
+                }
+            }
 
             $scope.colorKeys = colorKeys;
 
+            // define initial colorSets
             $scope.preset = {};
             $scope.presetEdited = {};
             $scope.defaultPreset = {};
@@ -100,6 +108,10 @@
             angular.copy(defaultPreset, $scope.preset);
             angular.copy(defaultPreset, $scope.presetEdited);
             angular.copy(defaultPreset, $scope.defaultPreset);
+
+            loadScreenColors($scope.preset);
+            loadScreenColors($scope.presetEdited);
+            loadScreenColors($scope.defaultPreset);
 
             $scope.hasColors = true;
             $scope.isEdited = false;
@@ -113,15 +125,15 @@
             $scope.isTemplateSelected = false;
 
             // change handler for the dropdown menu
-            $scope.presetSelected = function(preset) {
+            $scope.presetSelected = function (preset) {
                 $scope.selectedPreset = preset;
                 $scope.selectedPresetPath = preset.path;
                 $scope.isTemplateSelected = true;
             };
 
             // click handler for load action button
-            $scope.load = function() {
-                git.getPreset($scope.selectedPreset.url).then(function(content) {
+            $scope.load = function () {
+                git.getPreset($scope.selectedPreset.url).then(function (content) {
                     var decodedContent = atob(content);
                     console.log('retrieved preset ' + $scope.selectedPreset.path);
                     console.log(decodedContent);
@@ -130,6 +142,7 @@
                     // load the selectedPreset into the edited preset if there are no edits
                     if (!$scope.isEdited) {
                         angular.copy($scope.preset, $scope.presetEdited);
+                        loadScreenColors($scope.presetEdited);
                     }
 
                     $scope.hasColors = $scope.preset.black ||
@@ -149,6 +162,9 @@
                         $scope.preset.yellow ||
                         $scope.preset.white;
 
+                    if ($scope.preset.screen_colors) {
+                        loadScreenColors($scope.preset);
+                    }
                 });
             };
 
@@ -167,7 +183,7 @@
 
             $scope.colorToEdit = null;
             // click handler for edit action button
-            $scope.editColor = function(colorKey) {
+            $scope.editColor = function (colorKey) {
                 $scope.colorKey = colorKey;
                 $scope.colorToEdit = $scope.presetEdited[colorKey.key];
 
@@ -178,23 +194,41 @@
                 // console.log(red,green,blue);
             };
 
-            $scope.resetEdits = function() {
+            $scope.resetEdits = function () {
                 angular.copy($scope.preset, $scope.presetEdited);
                 $scope.isEdited = false;
             };
 
-            $scope.editDone = function() {
+            $scope.editDone = function () {
                 $scope.presetEdited[$scope.colorKey.key] = $scope.colorToEdit;
                 $scope.colorToEdit = null;
                 $scope.isEdited = true;
+                delete $scope.colorKey;
             };
 
-            $scope.editCancel = function() {
+            $scope.editCancel = function () {
                 $scope.colorToEdit = null;
+                delete $scope.colorKey;
             };
+
+            $scope.screenColorChanged = function () {
+                $scope.presetEdited.screen_colors = $scope.presetEdited.screenColors.join();
+                $scope.isEdited = true;
+            }
+
+            $scope.download = function () {
+                var toSave = angular.copy($scope.presetEdited);
+                delete toSave.screenColors;
+                var text = JSON.stringify(toSave, null, 4);
+                var filename = 'editied_preset.json'
+                var blob = new Blob([text], {
+                    type: "application/json;charset=utf-8"
+                });
+                saveAs(blob, filename);
+            }
 
             // get the border color for the edit action button
-            $scope.borderColor = function(colorHex) {
+            $scope.borderColor = function (colorHex) {
                 var red = parseInt(colorHex.substring(1).substring(0, 2), 16);
                 var green = parseInt(colorHex.substring(1).substring(2, 4), 16);
                 var blue = parseInt(colorHex.substring(1).substring(4, 6), 16);
@@ -204,11 +238,11 @@
             };
 
             // the list of presets from the master branch
-            git.getBranch().then(function(response) {
+            git.getBranch().then(function (response) {
                 console.log('retrieved branch');
-                git.getBranchTree().then(function(response) {
+                git.getBranchTree().then(function (response) {
                     console.log('retrieved branch tree');
-                    git.getPresetList().then(function(response) {
+                    git.getPresetList().then(function (response) {
                         console.log('retrieved ' + response.length + ' presets.');
                         $scope.presets = response;
                     });
