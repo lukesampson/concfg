@@ -28,7 +28,7 @@
                     var requestBranch = {};
                     angular.copy(baseRequest, requestBranch);
                     requestBranch.url =
-                        'https://api.github.com/repos/MindzGroupTechnologies/concfg/branches/master';
+                        'https://api.github.com/repos/lukesampson/concfg/branches/master';
 
                     return $http(requestBranch).then(function(response) {
                         gitBranchTreeUrl = response.data.commit.commit.tree.url;
