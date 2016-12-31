@@ -121,7 +121,7 @@
                                         -
                                         {{colorKey.displayName}}</strong>
                             </div>
-                            <div class="row" ng-if="!colorToEdit">
+                            <div class="row" ng-if="hasColors && !colorToEdit">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="well-sm">
                                         Select a color to Edit
@@ -154,7 +154,7 @@
                             <div class="well-sm">
                                 <strong>Preview</strong>
                             </div>
-                            <div class="row">
+                            <div class="row" ng-if="hasColors">
                                 <div class="col-md-12">
                                     <div class="ps-window" style="background-color: {{presetEdited[presetEdited.screenColors[1]]}}; color: {{presetEdited[presetEdited.screenColors[0]]}};">
                                         <div class="ps-line">

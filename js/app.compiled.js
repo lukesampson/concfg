@@ -219,24 +219,24 @@
             }];
 
             var defaultPreset = {
-                "black":        "#000000",
-                "dark_blue":    "#000080",
-                "dark_green":   "#008000",
-                "dark_cyan":    "#008080",
-                "dark_red":     "#800000",
+                "black": "#000000",
+                "dark_blue": "#000080",
+                "dark_green": "#008000",
+                "dark_cyan": "#008080",
+                "dark_red": "#800000",
                 "dark_magenta": "#800080",
-                "dark_yellow":  "#808000",
-                "gray":         "#c0c0c0",
-                "dark_gray":    "#808080",
-                "blue":         "#0000ff",
-                "green":        "#00ff00",
-                "cyan":         "#00ffff",
-                "red":          "#ff0000",
-                "magenta":      "#ff00ff",
-                "yellow":       "#ffff00",
-                "white":        "#ffffff",
+                "dark_yellow": "#808000",
+                "gray": "#c0c0c0",
+                "dark_gray": "#808080",
+                "blue": "#0000ff",
+                "green": "#00ff00",
+                "cyan": "#00ffff",
+                "red": "#ff0000",
+                "magenta": "#ff00ff",
+                "yellow": "#ffff00",
+                "white": "#ffffff",
                 "screen_colors": "gray,black",
-                "popup_colors":  "dark_magenta,white"
+                "popup_colors": "dark_magenta,white"
             };
 
             var loadScreenColors = function (sourcePreset) {
@@ -313,6 +313,9 @@
                     if ($scope.preset.screen_colors) {
                         loadScreenColors($scope.preset);
                     }
+                    
+                    $scope.colorToEdit = null;
+                    delete $scope.colorKey;
                 });
             };
 
