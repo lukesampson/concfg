@@ -23,7 +23,7 @@ module.exports = function (grunt) {
         watch: {
             styles: {
                 files: ['css/*.less'], // which files to watch
-                tasks: ['less', 'cssmin'],
+                tasks: ['less', 'cssmin', 'concat:dist_css'],
                 options: {
                     nospawn: true
                 }
@@ -37,9 +37,44 @@ module.exports = function (grunt) {
             }
         },
         concat: {
-            dist: {
-                src: ['js/app.js', 'js/app.gitService.provider.js', 'js/app.main.controller.js', 'js/fileSaver.js'],
+            dist_main: {
+                src: [
+                    'js/app.js',
+                    'js/app.gitService.provider.js',
+                    'js/app.main.controller.js',
+                    'js/fileSaver.js'
+                ],
                 dest: 'js/app.compiled.js',
+            },
+            dist_libs: {
+                src: [
+                    'bower_components/jquery/dist/jquery.min.js',
+                    'bower_components/angular/angular.min.js',
+                    'bower_components/angular-animate/angular-animate.min.js',
+                    'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
+                ],
+                dest: 'js/libs.min.js',
+            },
+            dist_css: {
+                src: [
+                    'bower_components/bootstrap/dist/css/bootstrap.min.css',
+                    'css/main.min.css'
+                ],
+                dest: 'css/app.compiled.min.css',
+            }
+        },
+        copy: {
+            main: {
+                files: [
+                    // includes files within path
+                    {
+                        expand: true,
+                        cwd: 'bower_components/bootstrap/fonts/',
+                        src: ['**'],
+                        dest: 'fonts/',
+                        filter: 'isFile'
+                    }
+                ],
             },
         },
         uglify: {
@@ -60,7 +95,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
     // register tasks
-    grunt.registerTask('default', ['less', 'cssmin', 'concat', 'uglify', 'watch']);
+    grunt.registerTask('default', ['copy', 'less', 'cssmin', 'concat', 'uglify', 'watch']);
 }

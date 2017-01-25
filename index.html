@@ -6,16 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PS Theme Viewer</title>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <!-- <script src="js/app.min.js"></script>
-    <script src="js/app.gitService.provider.min.js"></script>
-    <script src="js/app.main.controller.min.js"></script> -->
-    <script src="js/app.compiled.min.js"></script>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/main.min.css" />
+    <link rel="stylesheet" href="css/app.compiled.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500,700" rel="stylesheet">
 </head>
@@ -194,14 +185,23 @@
         </div>
     </div>
 </body>
+<script src="js/libs.min.js"></script>
+<script src="js/app.compiled.min.js"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-  ga('create', 'UA-2269721-13', 'auto');
-  ga('send', 'pageview');
-
+    ga('create', 'UA-2269721-13', 'auto');
+    ga('send', 'pageview');
 </script>
+
 </html>
