@@ -39,21 +39,16 @@ module.exports = function (grunt) {
         concat: {
             dist_main: {
                 src: [
+                    'bower_components/jquery/dist/jquery.min.js',
+                    'bower_components/angular/angular.min.js',
+                    'bower_components/angular-animate/angular-animate.min.js',
+                    'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
                     'js/app.js',
                     'js/app.gitService.provider.js',
                     'js/app.main.controller.js',
                     'js/fileSaver.js'
                 ],
                 dest: 'js/app.compiled.js',
-            },
-            dist_libs: {
-                src: [
-                    'bower_components/jquery/dist/jquery.min.js',
-                    'bower_components/angular/angular.min.js',
-                    'bower_components/angular-animate/angular-animate.min.js',
-                    'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
-                ],
-                dest: 'js/libs.min.js',
             },
             dist_css: {
                 src: [
