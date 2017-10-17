@@ -173,13 +173,13 @@
 
 ![powershell-defaults](./powershell-defaults.png "powershell-defaults")
 
-## railcasts
+## railscasts
 
-![railcasts](./railcasts.png "railcasts")
+![railscasts](./railscasts.png "railscasts")
 
-## railcasts.light
+## railscasts.light
 
-![railcasts.light](./railcasts.light.png "railcasts.light")
+![railscasts.light](./railscasts.light.png "railscasts.light")
 
 ## shapshifter
 
