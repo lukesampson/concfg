@@ -8,6 +8,7 @@
 
 . "$psscriptroot\..\lib\shortcut.ps1"
 $pspath = "$pshome\powershell.exe"
+$pscorepath = "$pshome\pwsh.exe"
 
 function cleandir($dir) {
 	if(!(test-path $dir)) { return }
@@ -16,7 +17,7 @@ function cleandir($dir) {
 		if($_.psiscontainer) { cleandir $_.fullname }
 		else {
 			$path = $_.fullname
-			if(linksto $path $pspath) {
+			if((linksto $path $pspath) -or (linksto $path $pscorepath)) {
 				if(!(rmprops $path)) {
 					write-host "warning: admin permission is required to remove console props from $path" -f darkyellow
 				}
