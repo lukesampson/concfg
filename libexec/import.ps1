@@ -140,7 +140,11 @@ if(!$non_interactive) {
 	}
 
 	$yn = read-host "would you like to open a new console to see the changes? (Y/n)"
-	if(!$yn -or ($yn -like 'y*')) { start 'powershell.exe' -arg -nologo }
+	$ps_exe = 'powershell.exe'
+	if (Test-Path "$pshome\pwsh.exe") {
+		$ps_exe = "$pshome\pwsh.exe"
+	}
+	if(!$yn -or ($yn -like 'y*')) { start $ps_exe -arg -nologo }
 } else {
 	write-host (wraptext "please start a new console to see changes")
 	write-host (wraptext "you may also need to run 'concfg clean' to remove overrides from the registry and shortcut files.")
