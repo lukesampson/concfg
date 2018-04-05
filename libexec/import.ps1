@@ -15,10 +15,6 @@
 . "$psscriptroot\..\lib\help.ps1"
 . "$psscriptroot\..\lib\getopt.ps1"
 
-    # is it light color scheme?
-    $global:light = 0
-
-
 function encode($val, $type) {
 	switch($type) {
 		'bool' { if($val) { 1 } else { 0 } }
@@ -82,56 +78,10 @@ function text($src) {
 
 	# local file path
 	if(test-path $src) { return gc $src -raw }
-
+	
 	# preset
 	preset $src
-
-}
-
-function set_color_in_profile_for($token, $color) {
-	if (!(Test-Path -Path $profile)) {
-		wraptext "`n Profile does not exist. Exiting Now"
-		exit -1
-	}
-	$p = Get-ChildItem $profile
-	(Get-Content $p.PSPath) | Foreach-Object {
-		if ($_ -match $token) {
-			$current_color = $_.split(" ")[-1]
-			$_ -replace $current_color, $color
-		} else {
-			$_
-		}
-	}  | Set-Content $p.PSPath
-}
-
-function set_profile() {
-
-	if (!(Test-Path -Path $profile)) {
-		write-host (wraptext "`nProfile does not exist.")
-		New-Item -ItemType File -Path $profile -Force
-		write-host (wraptext "`nCreated New Profile")
-	}
-
-	# These are default colors in Powershell 5
-	$color1 = "White"
-	$color2 = "White"
-
-	if ($global:light) {
-		write-host (wraptext "`nIt looks like you are using a light colorscheme. Some foreground colors in Powershell may not work well with light colorscheme.")
-		$yn = read-host "would you like to fix them? (Y/n)"
-		if(!$yn -or ($yn -like 'y*')) {
-			# Select Member and Number foreground colors
-			$color1 = "DarkMagenta"
-			$color2 = "DarkGray"
-		} else {
-			write-host (wraptext "`nok. if you change your mind later you can reapply the colorscheme to fix it.")
-		}
-	}
-
-	# Set Member and Number foreground colors
-	set_color_in_profile_for "Number" $color1
-	set_color_in_profile_for "Member" $color2
-	write-host (wraptext "`ndone.")
+	
 }
 
 function import_json($json) {
@@ -144,19 +94,12 @@ function import_json($json) {
 	$props.psobject.properties | % {
 		$key,$type = $reverse_map[$_.name]
 		$val = $_.value
-		if($key) {
-            $encoded[$key] = (encode $val $type)
-            if ($key -match "ScreenColors"){
-                if (($val.split(",")[-1]) -match "white") {
-                    $global:light = 1
-                }
-            }
-        }
+		if($key) { $encoded[$key] = (encode $val $type) }
 	}
 
-	if(!(test-path hkcu:\console)) { ni hkcu:\Console > $null }
+	if(!(test-path hkcu:\console)) { ni hkcu:\Console > $null } 
 
-	$encoded.keys | % {
+	$encoded.keys | % { 
 		sp hkcu:\console $_ $encoded[$_]
 	}
 }
@@ -187,7 +130,6 @@ foreach($s in $srcs) {
 }
 
 if(!$non_interactive) {
-	set_profile
 	write-host (wraptext "`noverrides in the registry and shortcut files might interfere with your concfg settings.")
 	$yn = read-host "would you like to find and remove them? (Y/n)"
 	if(!$yn -or ($yn -like 'y*')) {
