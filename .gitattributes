@@ -1,3 +1,0 @@
-# retain windows line-endings in text files in case checked out on mac or linux
-*.png binary
-* text eol=crlf
