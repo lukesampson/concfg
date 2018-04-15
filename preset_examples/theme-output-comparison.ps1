@@ -1,4 +1,4 @@
-﻿$conCfgPresetsOutput = concfg presets
+$conCfgPresetsOutput = concfg presets
 
 $conCfgPresetOutputArr = $conCfgPresets -split " "
 
