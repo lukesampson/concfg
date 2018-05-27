@@ -1,9 +1,9 @@
 function command_files {
-	gci ("$psscriptroot\..\libexec") | where { $_.name.endswith('.ps1') }
+	Get-ChildItem ("$psscriptroot\..\libexec") | Where-Object { $_.name.endswith('.ps1') }
 }
 
 function commands {
-	command_files | % { command_name $_ }
+	command_files | ForEach-Object { command_name $_ }
 }
 
 function command_name($filename) { $filename.name -replace '\.ps1$', '' }

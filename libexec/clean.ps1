@@ -13,7 +13,7 @@ $pscorepath = "$pshome\pwsh.exe"
 function cleandir($dir) {
 	if(!(test-path $dir)) { return }
 
-	gci $dir | % {
+	Get-ChildItem $dir | ForEach-Object {
 		if($_.psiscontainer) { cleandir $_.fullname }
 		else {
 			$path = $_.fullname
@@ -28,9 +28,9 @@ function cleandir($dir) {
 
 # clean registry
 if(test-path hkcu:console) {
-	gci hkcu:console | % {
+	Get-ChildItem hkcu:console | ForEach-Object {
 		write-host "removing $($_.name)"
-		rm "registry::$($_.name)"
+		Remove-Item "registry::$($_.name)"
 	}
 }
 
@@ -41,6 +41,4 @@ $dirs = @(
 	"\ProgramData\Microsoft\Windows\Start Menu\Programs"
 )
 
-$dirs | % {	cleandir $_ }
-
-
+$dirs | ForEach-Object {	cleandir $_ }
