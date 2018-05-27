@@ -106,11 +106,18 @@ function settokencolor ($non_interactive) {
 }
 
 function resettokencolor ($non_interactive) {
-    # Reset
-    Set-PSReadlineOption -ResetTokenColors
+    try {
+        # Reset
+        Set-PSReadlineOption -ResetTokenColors
 
-    if (!$non_interactive) {
-        Write-Output "concfg tokencolor disabled."
+        if (!$non_interactive) {
+            Write-Output "concfg tokencolor disabled."
+        }
+    } catch {
+        if(!$non_interactive) {
+            Write-Output "ERROR: you have to install PSReadline to use token colors"
+        }
+        exit 1
     }
 }
 
