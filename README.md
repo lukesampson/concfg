@@ -9,7 +9,8 @@ If you have [Scoop](http://scoop.sh), you can install concfg with `scoop install
 
 ### Important Caveats
 * Console settings can be overridden by program- or shortcut-specific settings stored in the registry or in the .lnk file itself. Concfg can attempt to clean these up for you by removing registry settings that might conflict and removing console properties from .lnk files in known directories. `concfg import` will prompt you to clean these up after an import, or you can run `concfg clean` at any time.
-* PowerShell's syntax highlighting isn't compatible with Base16's conventions by default. To set syntax highlighting to colors consistent with Base16's conventions, use the base16-syntax-coloring.ps1 script. To reset the syntax coloring to the default, use the command `Set-PSReadlineOptions -ResetTokenColors`.
+* PowerShell's syntax highlighting isn't compatible with Base16's conventions by default. To set syntax highlighting to colors consistent with Base16's conventions,
+use `concfg tokencolor` sub-command to modify the syntax highlighting colors.
 
 [Screenshots of included presets](./preset_examples/README.md)
 
