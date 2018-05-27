@@ -3,6 +3,6 @@
 # Help: Lists the presets that are available for the 'concfg import' command
 
 "Available presets:"
-gci "$psscriptroot\..\presets" | % {
+Get-ChildItem "$psscriptroot\..\presets" | ForEach-Object {
 	"   $([io.path]::getfilenamewithoutextension($_.name))"
 }

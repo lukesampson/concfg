@@ -13,6 +13,6 @@ foreach ($word in $conCfgPresetOutputArr){
 foreach ($preset in $conCfgPresetsArr){
     concfg clean
     concfg import -n $preset
-    start Powershell "-NoExit -File .\outcolors.ps1 -preset $preset"
-    sleep -Seconds 3
+    Start-Process Powershell "-NoExit -File .\outcolors.ps1 -preset $preset"
+    Start-Sleep -Seconds 3
 }

@@ -44,7 +44,7 @@ function decode($val, $type) {
 
 function export_json {
 	$props = @{}
-	(gp hkcu:\console).psobject.properties | sort name |% {
+	(Get-ItemProperty hkcu:\console).psobject.properties | Sort-Object name | ForEach-Object {
 		$name,$type = $map[$_.name]
 		if($name) {
 			$props.add($name, (decode $_.value $type))

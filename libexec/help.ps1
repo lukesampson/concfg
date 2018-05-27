@@ -7,7 +7,7 @@ param($cmd)
 . "$psscriptroot\..\lib\help.ps1"
 
 function print_help($cmd) {
-	$file = gc ("$psscriptroot\$cmd.ps1") -raw
+	$file = Get-Content ("$psscriptroot\$cmd.ps1") -raw
 
 	$usage = usage $file
 	$summary = summary $file
@@ -20,14 +20,14 @@ function print_help($cmd) {
 function print_summaries {
 	$commands = @{}
 
-	command_files | % {
+	command_files | ForEach-Object {
 		$command = command_name $_
-		$summary = summary (gc ("$psscriptroot\$_") -raw )
+		$summary = summary (Get-Content ("$psscriptroot\$_") -raw )
 		if(!($summary)) { $summary = '' }
 		$commands.add("$command ", $summary) # add padding
 	}
 
-	$commands.getenumerator() | sort name | ft -hidetablehead -autosize -wrap
+	$commands.getenumerator() | Sort-Object name | Format-Table -hidetablehead -autosize -wrap
 }
 
 $commands = commands
@@ -45,4 +45,3 @@ Some useful commands are:"
 }
 
 exit 0
-

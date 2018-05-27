@@ -2,9 +2,9 @@ param (
     [string]$preset = ""
 )
 
-function Out-Colors()
+function Out-Color()
 {
-    [enum]::GetValues([ConsoleColor]) | % {
+    [enum]::GetValues([ConsoleColor]) | ForEach-Object {
         Write-Host -NoNewLine "$($_.value__) : $_`t"
         Write-Host "COLOR`t" -ForegroundColor $_ -NoNewLine
         Write-Host "`t" -BackgroundColor $_
@@ -13,4 +13,4 @@ function Out-Colors()
 
 Write-Host "Displaying $preset preset"
 
-Out-Colors
+Out-Color

@@ -57,7 +57,7 @@ function encode($val, $type) {
 		'string' { $val }
 		'dim' {
 			if($val -notmatch '^\d+x\d+$') { write-host "invalid dimensions '$val'" -f red; exit 1}
-			$width, $height = $val.split('x') | % { [int16]::parse($_) }
+			$width, $height = $val.split('x') | ForEach-Object { [int16]::parse($_) }
 			$width_b = [bitconverter]::getbytes($width)
 			$height_b = [bitconverter]::getbytes($height)
 			[byte[]]$bytes = @($width_b[0], $width_b[1], $height_b[0], $height_b[1])
@@ -69,7 +69,7 @@ function encode($val, $type) {
 function preset($name) {
 	if(!$name.endswith('.json')) { $name = "$name.json" }
 	$x = "$psscriptroot\..\presets\$name"
-	if(test-path $x) { gc $x -raw }
+	if(test-path $x) { Get-Content $x -raw }
 }
 
 function text($src) {
@@ -77,7 +77,7 @@ function text($src) {
 	if($src -match '^https?://') { return (new-object net.webclient).downloadstring($src) }
 
 	# local file path
-	if(test-path $src) { return gc $src -raw }
+	if(test-path $src) { return Get-Content $src -raw }
 	
 	# preset
 	preset $src
@@ -91,23 +91,23 @@ function import_json($json) {
 	# anything goes wrong
 	$encoded = @{}
 
-	$props.psobject.properties | % {
+	$props.psobject.properties | ForEach-Object {
 		$key,$type = $reverse_map[$_.name]
 		$val = $_.value
 		if($key) { $encoded[$key] = (encode $val $type) }
 	}
 
-	if(!(test-path hkcu:\console)) { ni hkcu:\Console > $null } 
+	if(!(test-path hkcu:\console)) { New-Item hkcu:\Console > $null } 
 
-	$encoded.keys | % { 
-		sp hkcu:\console $_ $encoded[$_]
+	$encoded.keys | ForEach-Object { 
+		Set-ItemProperty hkcu:\console $_ $encoded[$_]
 	}
 }
 
 # flattens $args in case commas were used to separate sources
 function get_sources($a) {
 	$srcs = @()
-	$a | % { $srcs += [string]$_ }
+	$a | ForEach-Object { $srcs += [string]$_ }
 	$srcs
 }
 
@@ -144,9 +144,8 @@ if(!$non_interactive) {
 	if (Test-Path "$pshome\pwsh.exe") {
 		$ps_exe = "$pshome\pwsh.exe"
 	}
-	if(!$yn -or ($yn -like 'y*')) { start $ps_exe -arg -nologo }
+	if(!$yn -or ($yn -like 'y*')) { Start-Process $ps_exe -arg -nologo }
 } else {
 	write-host (wraptext "please start a new console to see changes")
 	write-host (wraptext "you may also need to run 'concfg clean' to remove overrides from the registry and shortcut files.")
 }
-
