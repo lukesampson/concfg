@@ -197,9 +197,9 @@
 
 ![small](./small.png "small")
 
-## solarized
+## solarized-dark
 
-![solarized](./solarized.png "solarized")
+![solarized-dark](./solarized-dark.png "solarized-dark")
 
 ## solarized-light
 
