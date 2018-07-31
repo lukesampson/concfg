@@ -19,7 +19,7 @@ use `concfg tokencolor` sub-command to modify the syntax highlighting colors.
 ##### Presets
 Use the [Solarized](http://ethanschoonover.com/solarized) dark color presets:
 ```
-concfg import solarized
+concfg import solarized-dark
 ```
 
 Revert to the stock-standard console settings:
