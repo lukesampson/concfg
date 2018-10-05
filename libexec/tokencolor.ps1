@@ -82,21 +82,8 @@ function settokencolor ($non_interactive) {
         }
         exit 1
     } else {
-        # PSReadLine 2
-        if ((Get-Module -ListAvailable -Name "PSReadline").Version.Major -eq 2) {
-            $options = Get-PSReadlineOption
-            # Token Foreground                                # base16 colors
-            $options.CommandColor   = "$([char]0x1b)[34m"     # base0D
-            $options.CommentColor   = "$([char]0x1b)[93m"     # base03
-            $options.KeywordColor   = "$([char]0x1b)[35m"     # base0E
-            $options.MemberColor    = "$([char]0x1b)[34m"     # base0D
-            $options.NumberColor    = "$([char]0x1b)[91m"     # base09
-            $options.OperatorColor  = "$([char]0x1b)[36m"     # base0C
-            $options.ParameterColor = "$([char]0x1b)[91m"     # base09
-            $options.StringColor    = "$([char]0x1b)[32m"     # base0B
-            $options.TypeColor      = "$([char]0x1b)[33m"     # base0A
-            $options.VariableColor  = "$([char]0x1b)[31m"     # base08
-        } else {
+        # PSReadLine 1
+        if ((Get-Module -ListAvailable -Name "PSReadline").Version.Major -eq 1) {
             # Reset
             Set-PSReadlineOption -ResetTokenColors
 
@@ -112,6 +99,19 @@ function settokencolor ($non_interactive) {
             $options.StringForegroundColor    = "DarkGreen"   # base0B
             $options.TypeForegroundColor      = "DarkYellow"  # base0A
             $options.VariableForegroundColor  = "DarkRed"     # base08
+        } else {
+            $options = Get-PSReadlineOption
+            # Token Foreground                                # base16 colors
+            $options.CommandColor   = "$([char]0x1b)[34m"     # base0D
+            $options.CommentColor   = "$([char]0x1b)[93m"     # base03
+            $options.KeywordColor   = "$([char]0x1b)[35m"     # base0E
+            $options.MemberColor    = "$([char]0x1b)[34m"     # base0D
+            $options.NumberColor    = "$([char]0x1b)[91m"     # base09
+            $options.OperatorColor  = "$([char]0x1b)[36m"     # base0C
+            $options.ParameterColor = "$([char]0x1b)[91m"     # base09
+            $options.StringColor    = "$([char]0x1b)[32m"     # base0B
+            $options.TypeColor      = "$([char]0x1b)[33m"     # base0A
+            $options.VariableColor  = "$([char]0x1b)[31m"     # base08
         }
 
         if (!$non_interactive) {
@@ -127,8 +127,11 @@ function resettokencolor ($non_interactive) {
         }
         exit 1
     } else {
-        # PSReadLine 2
-        if ((Get-Module -ListAvailable -Name "PSReadline").Version.Major -eq 2) {
+        # PSReadLine 1
+        if ((Get-Module -ListAvailable -Name "PSReadline").Version.Major -eq 1) {
+            # Reset
+            Set-PSReadlineOption -ResetTokenColors
+        } else {
             $options = Get-PSReadlineOption
             # Default Colors                       
             $options.CommandColor   = "$([char]0x1b)[93m"
@@ -141,9 +144,6 @@ function resettokencolor ($non_interactive) {
             $options.StringColor    = "$([char]0x1b)[36m"
             $options.TypeColor      = "$([char]0x1b)[37m"
             $options.VariableColor  = "$([char]0x1b)[92m"
-        } else {
-            # Reset
-            Set-PSReadlineOption -ResetTokenColors
         }
 
         if (!$non_interactive) {
