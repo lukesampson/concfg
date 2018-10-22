@@ -24,7 +24,7 @@ concfg import solarized-dark
 
 Revert to the stock-standard console settings:
 ```
-concfg import defaults
+concfg import windows-console-defaults
 ```
 
 ##### Importing settings from a URL
