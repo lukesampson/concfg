@@ -22,7 +22,7 @@ function print_summaries {
 
 	command_files | ForEach-Object {
 		$command = command_name $_
-		$summary = summary (Get-Content ("$psscriptroot\$_") -raw )
+		$summary = summary (Get-Content $_.FullName -raw )
 		if(!($summary)) { $summary = '' }
 		$commands.add("$command ", $summary) # add padding
 	}
