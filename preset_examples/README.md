@@ -9,6 +9,10 @@
 
 ![3024.light](./3024.light.png "3024.light")
 
+## Seoul256
+
+![Seoul256](./Seoul256.png "Seoul256")
+
 ## atelierdune
 
 ![atelierdune](./atelierdune.png "atelierdune")
@@ -60,6 +64,10 @@
 ## big
 
 ![big](./big.png "big")
+
+## bombyx
+
+![bombyx](./bombyx.png "bombyx")
 
 ## chalk
 
@@ -180,10 +188,6 @@
 ## railscasts.light
 
 ![railscasts.light](./railscasts.light.png "railscasts.light")
-
-## Seoul256
-
-![Seoul256](./Seoul256.png "Seoul256")
 
 ## shapshifter
 
