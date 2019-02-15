@@ -62,7 +62,7 @@ function Test-IsShortcut($path) {
 }
 
 function Remove-Property($path) {
-    if (!(Test-IsShortcut $path)) { return }
+    if (!(Test-IsShortcut $path)) { return $false }
 
     $path = "$(Resolve-Path $path)"
     try {
@@ -70,5 +70,7 @@ function Remove-Property($path) {
         Write-Output "Removed console properties from '$path'"
     } catch [UnauthorizedAccessException] {
         Write-Warning "admin permission is required to remove console props from '$path'"
+        return $false
     }
+    return $true
 }
