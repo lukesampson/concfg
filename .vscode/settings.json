@@ -1,4 +1,9 @@
-// Configure PSScriptAnalyzer settings
 {
-    "powershell.scriptAnalysis.settingsPath": "PSScriptAnalyzerSettings.psd1"
+    "powershell.scriptAnalysis.settingsPath": "PSScriptAnalyzerSettings.psd1",
+    "powershell.codeFormatting.alignPropertyValuePairs": true,
+    "powershell.codeFormatting.ignoreOneLineBlock": true,
+    "editor.rulers": [
+        80,
+        120
+    ]
 }

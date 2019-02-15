@@ -32,6 +32,8 @@
         'PSAvoidUsingInvokeExpression',
         # PSUseDeclaredVarsMoreThanAssignments doesn't currently work due to:
         # https://github.com/PowerShell/PSScriptAnalyzer/issues/636
-        'PSUseDeclaredVarsMoreThanAssignments'
+        'PSUseDeclaredVarsMoreThanAssignments',
+        # Do not check functions whose verbs change system state
+        'PSUseShouldProcessForStateChangingFunctions'
     )
 }

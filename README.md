@@ -53,4 +53,3 @@ Thanks to Stephen Edgar([@ntwb](https://github.com/ntwb)) for adding support for
 Concfg uses Ethan Schoonover's [Solarized](http://ethanschoonover.com/solarized) color theme.
 
 Code for removing console properties from shortcuts is based on code from the [Coapp Toolkit](https://github.com/coapp/coapp) project.
-

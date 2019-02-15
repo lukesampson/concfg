@@ -1,44 +1,46 @@
 # Usage: concfg clean
 # Summary: Clean overrides from the registry and .lnk files
 # Help: Cleans any program-specific overrides from the registry.
+#
+# Background: The Console will save program-specific overrides to
+# the registry and sometimes shortcut files when you edit
+# the console properties directly. These overrides can
+# prevent your concfg settings from working properly.
+# Using concfg clean can remove all these overrides.
+. "$PSScriptRoot\..\lib\shortcut.ps1"
 
-# Background: The Console will save program-specific overrides to the registry and sometimes
-# shortcut files when you edit the console properties directly. These overrides can prevent
-# your concfg settings from working properly.
+function Reset-PowerShellShortcut($dir) {
+    if (!(Test-Path $dir)) { return }
 
-. "$psscriptroot\..\lib\shortcut.ps1"
-$pspath = "$pshome\powershell.exe"
-$pscorepath = "$pshome\pwsh.exe"
-
-function cleandir($dir) {
-	if(!(test-path $dir)) { return }
-
-	Get-ChildItem $dir | ForEach-Object {
-		if($_.psiscontainer) { cleandir $_.fullname }
-		else {
-			$path = $_.fullname
-			if((linksto $path $pspath) -or (linksto $path $pscorepath)) {
-				if(!(rmprops $path)) {
-					write-host "warning: admin permission is required to remove console props from $path" -f darkyellow
-				}
-			}
-		}
-	}
+    Get-ChildItem $dir | ForEach-Object {
+        if ($_.PsIsContainer) {
+            Reset-PowerShellShortcut $_.FullName
+        } else {
+            $path = $_.FullName
+            if (Test-IsPowershellShortcut $path) {
+                Remove-Property $path
+            }
+        }
+    }
 }
 
-# clean registry
-if(test-path hkcu:console) {
-	Get-ChildItem hkcu:console | ForEach-Object {
-		write-host "removing $($_.name)"
-		Remove-Item "registry::$($_.name)"
-	}
+function Clear-AllOverride {
+    # 1. clean console registry
+    if (Test-Path 'HKCU:\Console') {
+        Get-ChildItem 'HKCU:\Console' | ForEach-Object {
+            Write-Output "Removing 'Registry::$($_.Name)'"
+            Remove-Item "Registry::$($_.Name)"
+        }
+    }
+
+    # 2. clean powershell .lnk files
+    @(
+        "$env:ALLUSERSPROFILE\Microsoft\Windows\Start Menu\Programs",
+        "$env:USERPROFILE\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch\User Pinned\StartMenu",
+        "$env:USERPROFILE\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar",
+        "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell"
+    ) | ForEach-Object { Reset-PowerShellShortcut $_ }
 }
 
-# clean .lnk files
-$dirs = @(
-	"~\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar",
-	"~\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell",
-	"\ProgramData\Microsoft\Windows\Start Menu\Programs"
-)
-
-$dirs | ForEach-Object {	cleandir $_ }
+# entry
+Clear-AllOverride

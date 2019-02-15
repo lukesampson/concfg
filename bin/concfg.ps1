@@ -1,4 +1,4 @@
-#requires -v 3
+#Requires -Version 3
 param($cmd)
 
 . "$psscriptroot\..\lib\core.ps1"
