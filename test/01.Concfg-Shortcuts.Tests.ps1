@@ -1,4 +1,4 @@
-. "$psscriptroot\..\lib\shortcut.ps1"
+. "$PSScriptRoot\..\lib\shortcut.ps1"
 
 $real_path = "$env:USERPROFILE\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk"
 $fake_not_exist = "asdf"

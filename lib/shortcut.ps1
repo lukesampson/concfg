@@ -67,7 +67,7 @@ function Remove-Property($path) {
     $path = "$(Resolve-Path $path)"
     try {
         [Concfg.ShortcutManager]::ResetConsoleProperties($path)
-        Write-Output "Removed console properties from '$path'"
+        Write-Output "Reset console properties from '$path'"
     } catch [UnauthorizedAccessException] {
         Write-Warning "admin permission is required to remove console props from '$path'"
         return $false

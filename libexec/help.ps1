@@ -1,6 +1,6 @@
 # Usage: concfg help <command>
 # Summary: Show help for a command
-param($cmd)
+Param($cmd)
 
 . "$PSScriptRoot\..\lib\core.ps1"
 . "$PSScriptRoot\..\lib\commands.ps1"
@@ -13,8 +13,8 @@ function print_help($cmd) {
     $summary = summary $file
     $help = help $file
 
-    if($usage) { "$usage`n" }
-    if($help) { $help }
+    if ($usage) { "$usage`n" }
+    if ($help) { $help }
 }
 
 function print_summaries {

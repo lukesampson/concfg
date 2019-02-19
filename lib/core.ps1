@@ -26,8 +26,8 @@ $map = @{
     'HistoryNoDup'=@('command_history_no_duplication', 'bool')
     'WindowAlpha'=@('window_alpha', 'int')
 }
-for($i=0;$i -lt $colors.length;$i++) {
-    $map.add("ColorTable$($i.tostring('00'))", @($colors[$i],'color'))
+for ($i=0; $i -lt $colors.length; $i++) {
+    $map.add("ColorTable$($i.tostring('00'))", @($colors[$i], 'color'))
 }
 $reverse_map = @{}
 foreach($key in $map.keys) {
