@@ -32,6 +32,12 @@ concfg import basic
 
 This will import some opinioned non-color settings, such as fontFace and fontSize, etc.
 
+You can also import multiple presets once, the later sources will override settings from the earlier ones.
+
+```
+concfg import solarized-dark basic
+```
+
 3. If you want to revert to the stock-standard console color preset:
 
 ```
