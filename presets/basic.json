@@ -1,0 +1,15 @@
+{
+    "font_face": "Lucida Console",
+    "font_true_type": true,
+    "font_size": "0x14",
+    "font_weight": 400,
+    "cursor_size": "small",
+    "window_size": "80x25",
+    "screen_buffer_size": "80x1000",
+    "command_history_length": 50,
+    "num_history_buffers": 4,
+    "quick_edit": false,
+    "insert_mode": true,
+    "fullscreen": false,
+    "load_console_IME": true
+}

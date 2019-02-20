@@ -1,40 +1,20 @@
 {
-  "black": "#4e9a06",
-  "dark_blue": "#3465a4",
-  "dark_green": "#300a24",
-  "dark_cyan": "#06989a",
-  "dark_red": "#cc0000",
-  "dark_magenta": "#75507b",
-  "dark_yellow": "#c4a000",
-  "gray": "#d3d7cf",
-  "dark_gray": "#555753",
-  "blue": "#729fcf",
-  "green": "#8ae234",
-  "cyan": "#34e2e2",
-  "red": "#ef2929",
-  "magenta": "#ad7fa8",
-  "yellow": "#fce94f",
-  "white": "#eeeeee",
-
-  "screen_colors": "white,dark_green",
-  "popup_colors": "dark_green,white",
-
-  "font_face": "Ubuntu Mono",
-  "font_true_type": true,
-  "font_size": "0x16",
-  "font_weight": 400,
-
-  "cursor_size": "small",
-
-  "window_size": "80x25",
-  "screen_buffer_size": "80x200",
-
-  "command_history_length": 50,
-  "num_history_buffers": 4,
-
-  "quick_edit": true,
-  "insert_mode": true,
-  "fullscreen": false,
-
-  "load_console_IME": true
+    "black": "#4e9a06",
+    "dark_blue": "#3465a4",
+    "dark_green": "#300a24",
+    "dark_cyan": "#06989a",
+    "dark_red": "#cc0000",
+    "dark_magenta": "#75507b",
+    "dark_yellow": "#c4a000",
+    "gray": "#d3d7cf",
+    "dark_gray": "#555753",
+    "blue": "#729fcf",
+    "green": "#8ae234",
+    "cyan": "#34e2e2",
+    "red": "#ef2929",
+    "magenta": "#ad7fa8",
+    "yellow": "#fce94f",
+    "white": "#eeeeee",
+    "screen_colors": "white,dark_green",
+    "popup_colors": "dark_green,white"
 }
