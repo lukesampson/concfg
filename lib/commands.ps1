@@ -9,7 +9,7 @@ function commands {
 }
 
 function command_name($filename) {
-    $filename.Name -replace '\.ps1$', ''
+    return [System.IO.Path]::GetFileNameWithoutExtension($filename.Name)
 }
 
 function exec($cmd, $arguments) {

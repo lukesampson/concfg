@@ -13,31 +13,31 @@ function print_help($cmd) {
     $summary = summary $file
     $help = help $file
 
-    if ($usage) { "$usage`n" }
-    if ($help) { $help }
+    if ($usage) { "$usage" }
+    if ($help) { "`n$help" }
 }
 
 function print_summaries {
-    $commands = @{}
+    $summaries = @{}
 
     command_files | ForEach-Object {
         $command = command_name $_
         $summary = summary (Get-Content $_.FullName -Raw )
         if (!($summary)) { $summary = '' }
-        $commands.add("$command ", $summary) # add padding
+        $summaries.Add("$command ", $summary) # add padding
     }
 
-    $commands.getenumerator() | Sort-Object name | Format-Table -hidetablehead -autosize -wrap
+    ($summaries.GetEnumerator() | Sort-Object name | Format-Table -HideTableHeaders -AutoSize -Wrap | Out-String).TrimEnd()
 }
 
 $commands = commands
 
 if (!($cmd)) {
-    "usage: concfg <command> [<args]
+    "Usage: concfg <command> [<args]
 
 Some useful commands are:"
     print_summaries
-    "type 'concfg help <command>' to get help for a specific command"
+    "`nType 'concfg help <command>' to get help for a specific command."
 } elseif ($commands -contains $cmd) {
     print_help $cmd
 } else {
