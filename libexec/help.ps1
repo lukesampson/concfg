@@ -1,47 +1,47 @@
 # Usage: concfg help <command>
 # Summary: Show help for a command
-param($cmd)
+Param($cmd)
 
-. "$psscriptroot\..\lib\core.ps1"
-. "$psscriptroot\..\lib\commands.ps1"
-. "$psscriptroot\..\lib\help.ps1"
+. "$PSScriptRoot\..\lib\core.ps1"
+. "$PSScriptRoot\..\lib\commands.ps1"
+. "$PSScriptRoot\..\lib\help.ps1"
 
 function print_help($cmd) {
-	$file = Get-Content ("$psscriptroot\$cmd.ps1") -raw
+    $file = Get-Content ("$PSScriptRoot\$cmd.ps1") -Raw
 
-	$usage = usage $file
-	$summary = summary $file
-	$help = help $file
+    $usage = usage $file
+    $summary = summary $file
+    $help = help $file
 
-	if($usage) { "$usage`n" }
-	if($help) { $help }
+    if ($usage) { "$usage" }
+    if ($help) { "`n$help" }
 }
 
 function print_summaries {
-	$commands = @{}
+    $summaries = @{}
 
-	command_files | ForEach-Object {
-		$command = command_name $_
-		$summary = summary (Get-Content $_.FullName -raw )
-		if(!($summary)) { $summary = '' }
-		$commands.add("$command ", $summary) # add padding
-	}
+    command_files | ForEach-Object {
+        $command = command_name $_
+        $summary = summary (Get-Content $_.FullName -Raw )
+        if (!($summary)) { $summary = '' }
+        $summaries.Add("$command ", $summary) # add padding
+    }
 
-	$commands.getenumerator() | Sort-Object name | Format-Table -hidetablehead -autosize -wrap
+    ($summaries.GetEnumerator() | Sort-Object name | Format-Table -HideTableHeaders -AutoSize -Wrap | Out-String).TrimEnd()
 }
 
 $commands = commands
 
-if(!($cmd)) {
-	"usage: concfg <command> [<args]
+if (!($cmd)) {
+    "Usage: concfg <command> [<args]
 
 Some useful commands are:"
-	print_summaries
-	"type 'concfg help <command>' to get help for a specific command"
-} elseif($commands -contains $cmd) {
-	print_help $cmd
+    print_summaries
+    "`nType 'concfg help <command>' to get help for a specific command."
+} elseif ($commands -contains $cmd) {
+    print_help $cmd
 } else {
-	"concfg help: no such command '$cmd'"; exit 1
+    "concfg help: no such command '$cmd'"; exit 1
 }
 
 exit 0

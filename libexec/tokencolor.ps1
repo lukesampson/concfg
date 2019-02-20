@@ -21,11 +21,10 @@
 #   https://github.com/lzybkr/PSReadLine#installation
 # Options:
 #   --non-interactive, -n: don't prompt Output
+. "$PSScriptRoot\..\lib\help.ps1"
+. "$PSScriptRoot\..\lib\getopt.ps1"
 
-. "$psscriptroot\..\lib\help.ps1"
-. "$psscriptroot\..\lib\getopt.ps1"
-
-function enable ($non_interactive) {
+function enable($non_interactive) {
     # Enable for current process
     settokencolor $non_interactive
 
@@ -55,7 +54,7 @@ function enable ($non_interactive) {
     }
 }
 
-function disable ($non_interactive) {
+function disable($non_interactive) {
     # Find $Profile
     if(!(test-path $profile)) {
         $profile_dir = split-path $profile
@@ -75,7 +74,7 @@ function disable ($non_interactive) {
     resettokencolor $non_interactive
 }
 
-function settokencolor ($non_interactive) {
+function settokencolor($non_interactive) {
     if (!(Get-Module -ListAvailable -Name "PSReadline")) {
         if(!$non_interactive) {
             Write-Output "ERROR: you have to install PSReadline to use token colors"
@@ -121,7 +120,7 @@ function settokencolor ($non_interactive) {
     }
 }
 
-function resettokencolor ($non_interactive) {
+function resettokencolor($non_interactive) {
     if (!(Get-Module -ListAvailable -Name "PSReadline")) {
         if(!$non_interactive) {
             Write-Output "ERROR: you have to install PSReadline to use token colors"
@@ -174,6 +173,6 @@ if ($args.length -eq 0) {
         disable $non_interactive
     } else {
         my_usage
-	    exit 1
+        exit 1
     }
 }

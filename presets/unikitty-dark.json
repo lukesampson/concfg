@@ -1,40 +1,20 @@
 {
-	"black":        "#2e2a31",
-	"dark_blue":    "#4a464d",
-	"dark_green":   "#666369",
-	"dark_cyan":    "#838085",
-	"dark_red":     "#9f9da2",
-	"dark_magenta": "#bcbabe",
-	"dark_yellow":  "#d8d7da",
-	"gray":         "#f5f4f7",
-	"dark_gray":    "#d8137f",
-	"blue":         "#d65407",
-	"green":        "#dc8a0e",
-	"cyan":         "#17ad98",
-	"red":          "#149bda",
-	"magenta":      "#796af5",
-	"yellow":       "#bb60ea",
-	"white":        "#c720ca",
-
-	"screen_colors": "dark_magenta,black",
-	"popup_colors":  "dark_red,dark_blue",
-
-	"font_face":      "Lucida Console",
-	"font_true_type": true,
-	"font_size":      "0x14",
-	"font_weight":    400,
-
-	"cursor_size": "small", 
-
-	"window_size":        "80x25",
-	"screen_buffer_size": "80x200",
-
-	"command_history_length": 50,
-	"num_history_buffers":     4,
-
-	"quick_edit":  true,
-	"insert_mode": true,
-	"fullscreen":  false,
-
-	"load_console_IME":  true
+    "black":        "#2e2a31",
+    "dark_blue":    "#4a464d",
+    "dark_green":   "#666369",
+    "dark_cyan":    "#838085",
+    "dark_red":     "#9f9da2",
+    "dark_magenta": "#bcbabe",
+    "dark_yellow":  "#d8d7da",
+    "gray":         "#f5f4f7",
+    "dark_gray":    "#d8137f",
+    "blue":         "#d65407",
+    "green":        "#dc8a0e",
+    "cyan":         "#17ad98",
+    "red":          "#149bda",
+    "magenta":      "#796af5",
+    "yellow":       "#bb60ea",
+    "white":        "#c720ca",
+    "screen_colors": "dark_magenta,black",
+    "popup_colors":  "dark_red,dark_blue"
 }

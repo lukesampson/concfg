@@ -1,13 +1,17 @@
 function command_files {
-	Get-ChildItem ("$psscriptroot\..\libexec") | Where-Object { $_.name.endswith('.ps1') }
+    Get-ChildItem ("$PSScriptRoot\..\libexec") | Where-Object {
+        $_.Name.EndsWith('.ps1')
+    }
 }
 
 function commands {
-	command_files | ForEach-Object { command_name $_ }
+    command_files | ForEach-Object { command_name $_ }
 }
 
-function command_name($filename) { $filename.name -replace '\.ps1$', '' }
+function command_name($filename) {
+    return [System.IO.Path]::GetFileNameWithoutExtension($filename.Name)
+}
 
 function exec($cmd, $arguments) {
-	& ("$psscriptroot\..\libexec\$cmd.ps1") @arguments
+    & ("$PSScriptRoot\..\libexec\$cmd.ps1") @arguments
 }

@@ -1,17 +1,4 @@
 {
-	"_comment": "
-
-Notes
-=====
-This the same as the console defaults, except:
-
- * dark_magenta is set to a dark blue, and used for the background
- * dark_yellow is set to white, and used for the foreground
-
-It's also a really big window, since you need 50% more space when you're
-typing PowerShell Verb-Noun commands, if not more.
-
-	",
 	"black":        "#000000",
 	"dark_blue":    "#000080",
 	"dark_green":   "#008000",
@@ -28,26 +15,6 @@ typing PowerShell Verb-Noun commands, if not more.
 	"magenta":      "#ff00ff",
 	"yellow":       "#ffff00",
 	"white":        "#ffffff",
-
 	"screen_colors": "dark_yellow,dark_magenta",
-	"popup_colors":  "cyan,white",
-
-	"font_face":      "",
-	"font_true_type": false,
-	"font_size":      "8x12",
-	"font_weight":    0,
-
-	"cursor_size": "small", 
-
-	"window_size":        "80x25",
-	"screen_buffer_size": "80x200",
-
-	"command_history_length": 50,
-	"num_history_buffers":     4,
-
-	"quick_edit":  true,
-	"insert_mode": true,
-	"fullscreen":  false,
-
-	"load_console_IME":  true
+	"popup_colors":  "cyan,white"
 }
