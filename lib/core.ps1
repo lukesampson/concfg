@@ -4,7 +4,7 @@
 # setting NT_CONSOLE_PROPS (not implemented):
 #     http://sourcewarp.blogspot.com.au/2012/06/windows-powershell-shortcut-ishelllink.html
 
-$colors = 'black,dark_blue,dark_green,dark_cyan,dark_red,dark_magenta,dark_yellow,gray,dark_gray,blue,green,cyan,red,magenta,yellow,white'.split(',')
+$colors = 'black,dark_blue,dark_green,dark_cyan,dark_red,dark_magenta,dark_yellow,gray,dark_gray,blue,green,cyan,red,magenta,yellow,white'.Split(',')
 
 $map = @{
     'FontFamily'=@('font_true_type', 'font_type')
@@ -26,28 +26,13 @@ $map = @{
     'HistoryNoDup'=@('command_history_no_duplication', 'bool')
     'WindowAlpha'=@('window_alpha', 'int')
 }
-for ($i=0; $i -lt $colors.length; $i++) {
-    $map.add("ColorTable$($i.tostring('00'))", @($colors[$i], 'color'))
+
+for ($i = 0; $i -lt $colors.length; $i++) {
+    $map.Add("ColorTable$($i.tostring('00'))", @($colors[$i], 'color'))
 }
+
 $reverse_map = @{}
-foreach($key in $map.keys) {
-    $name,$type = $map[$key]
-    $reverse_map.add($name, @($key,$type))
-}
-
-function wraptext($text, $width) {
-    if (!$width) { $width = $host.ui.rawui.windowsize.width }
-    $width -= 1 # be conservative: doesn't seem to print the last char
-
-    $text -split '\r?\n' | ForEach-Object {
-        $line = ''
-        $_ -split ' ' | ForEach-Object {
-            if ($line.length -eq 0) { $line = $_ }
-            elseif ($line.length + $_.length + 1 -le $width) { $line += " $_" }
-            else { $lines += ,$line; $line = $_ }
-        }
-        $lines += ,$line
-    }
-
-    $lines -join "`n"
+foreach ($key in $map.Keys) {
+    $name, $type = $map[$key]
+    $reverse_map.Add($name, @($key, $type))
 }

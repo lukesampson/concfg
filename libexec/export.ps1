@@ -3,7 +3,7 @@
 # Help: If a file path is supplied, your console settings will be written directly to it.
 #
 # If no path is supplied, writes the settings to standard output.
-param($path)
+Param($path)
 
 function decode($val, $type) {
     switch($type) {
@@ -44,10 +44,10 @@ function decode($val, $type) {
 
 function export_json {
     $props = @{}
-    (Get-ItemProperty hkcu:\console).psobject.properties | Sort-Object name | ForEach-Object {
-        $name,$type = $map[$_.name]
+    (Get-ItemProperty 'HKCU:\Console').PSObject.Properties | Sort-Object name | ForEach-Object {
+        $name, $type = $map[$_.Name]
         if ($name) {
-            $props.add($name, (decode $_.value $type))
+            $props.Add($name, (decode $_.Value $type))
         }
     }
 
@@ -57,7 +57,7 @@ function export_json {
 $json = export_json
 if ($path) {
     $json | Out-File $path -Encoding utf8
-    Write-Host "console settings exported to $(Split-Path $path -leaf)" -f DarkGreen
+    Write-Host "console settings exported to $(Split-Path $path -Leaf)" -f DarkGreen
 } else {
     $json
 }

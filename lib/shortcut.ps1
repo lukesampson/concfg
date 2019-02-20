@@ -1,5 +1,3 @@
-# Utilities to manage PowerShell Consoles
-
 Add-Type -TypeDefinition @'
 using System;
 using System.Runtime.InteropServices;
