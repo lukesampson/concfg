@@ -47,7 +47,7 @@ to use powershell-defaults.
 ### Importing settings from a URL
 
 ```
-concfg import https://raw.github.com/lukesampson/concfg/master/presets/solarized-light.json
+concfg import https://raw.githubusercontent.com/lukesampson/concfg/master/presets/solarized-light.json
 ```
 
 This URL happens to be one of the built in presets. It's just an example of importing a URL.
