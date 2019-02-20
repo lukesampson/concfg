@@ -18,19 +18,21 @@ use `concfg tokencolor` sub-command to modify the syntax highlighting colors.
 
 ### Use built-in presets
 
-Use a color scheme, for example use the [Solarized](http://ethanschoonover.com/solarized) dark color presets:
+1. Use a color scheme, for example use the [Solarized](http://ethanschoonover.com/solarized) dark color presets:
 
 ```
 concfg import solarized-dark
 ```
 
-Add some opinioned settings (optional)
+2. Add some opinioned settings (optional)
 
 ```
 concfg import basic
 ```
 
-If you want to revert to the stock-standard console color preset:
+This will import some opinioned non-color settings, such as fontFace and fontSize, etc.
+
+3. If you want to revert to the stock-standard console color preset:
 
 ```
 concfg import windows-console-defaults
@@ -46,8 +48,8 @@ to use powershell-defaults.
 
 ```
 concfg import https://raw.github.com/lukesampson/concfg/master/presets/solarized-light.json
-
 ```
+
 This URL happens to be one of the built in presets. It's just an example of importing a URL.
 The easy way to get Solarized light would be `concfg import solarized-light`
 
