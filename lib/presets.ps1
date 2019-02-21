@@ -5,3 +5,7 @@ function Get-BuiltinPreset {
     }
     return $presets
 }
+
+function Format-PresetOutput($presets) {
+    Write-Output ($presets | Format-Wide { $_ } -AutoSize -Force | Out-String).Trim()
+}

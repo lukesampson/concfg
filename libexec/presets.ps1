@@ -3,7 +3,7 @@
 # Help: Lists the presets that are available for the 'concfg import' command
 . "$PSScriptRoot\..\lib\presets.ps1"
 
-$presets = Get-BuiltinPreset
+$result = Get-BuiltinPreset
 
 Write-Output "Available presets:"
-Write-Output ($presets | Format-Wide { $_ } -AutoSize -Force | Out-String).Trim()
+Format-PresetOutput($result)
