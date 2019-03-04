@@ -70,3 +70,18 @@ function Remove-Property($path) {
         Write-Warning "admin permission is required to remove console props from '$path'"
     }
 }
+
+function Reset-PowerShellShortcut($dir) {
+    if (!(Test-Path $dir)) { return }
+
+    Get-ChildItem $dir | ForEach-Object {
+        if ($_.PsIsContainer) {
+            Reset-PowerShellShortcut $_.FullName
+        } else {
+            $path = $_.FullName
+            if (Test-IsPowershellShortcut $path) {
+                Remove-Property $path
+            }
+        }
+    }
+}

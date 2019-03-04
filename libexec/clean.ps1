@@ -9,21 +9,6 @@
 # Using concfg clean can remove all these overrides.
 . "$PSScriptRoot\..\lib\shortcut.ps1"
 
-function Reset-PowerShellShortcut($dir) {
-    if (!(Test-Path $dir)) { return }
-
-    Get-ChildItem $dir | ForEach-Object {
-        if ($_.PsIsContainer) {
-            Reset-PowerShellShortcut $_.FullName
-        } else {
-            $path = $_.FullName
-            if (Test-IsPowershellShortcut $path) {
-                Remove-Property $path
-            }
-        }
-    }
-}
-
 function Clear-AllOverride {
     # 1. clean console registry
     if (Test-Path 'HKCU:\Console') {

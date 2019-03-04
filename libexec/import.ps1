@@ -10,7 +10,8 @@
 # from the earlier ones.
 #
 # Options:
-#   --non-interactive, -n: don't prompt for input
+#   -n, --non-interactive  don't prompt for input
+#   -y, --yes              accpet prompts automatically
 . "$PSScriptRoot\..\lib\core.ps1"
 . "$PSScriptRoot\..\lib\help.ps1"
 . "$PSScriptRoot\..\lib\getopt.ps1"
@@ -151,15 +152,18 @@ function get_sources($inputArgs) {
 }
 
 # entry
-$opts, $args, $err = getopt $args 'n' @('non-interactive')
+$opts, $args, $err = getopt $args 'yn' @('yes', 'non-interactive')
+$optNonInteractive = $opts['non-interactive'] -or $opts.n
+$optYes = $opts['yes'] -or $opts.y
+
 if ($err) {
-    "concfg: ERROR: $err"
+    Write-Output "concfg: ERROR: $err"
     my_usage
     exit 1
 }
 
 if ($args.length -eq 0) {
-    "concfg: ERROR: source missing"
+    Write-Output "concfg: ERROR: source missing"
     my_usage
     exit 1
 }
@@ -168,30 +172,37 @@ $srcs = @(get_sources $args)
 foreach ($source in $srcs) {
     $json = Get-PresetJson $source
     if (!$json) {
-        "concfg: ERROR: couldn't load settings from $source"
-         exit 1
+        Write-Output "concfg: ERROR: couldn't load settings from $source"
+        exit 1
     }
 
     Import-PresetFromJson $json
     Write-Host "Console settings were imported from '$source'" -f DarkGreen
 }
 
-$non_interactive = $opts['non-interactive'] -or $opts.n
-if (!$non_interactive) {
-    $yn = Read-Host "Overrides in the registry and shortcut files might interfere with your concfg settings. Would you like to find and remove them? (Y/n)"
-    if (!$yn -or ($yn -like 'y*')) {
+if (!$optNonInteractive) {
+    if ($optYes) {
         & "$PSScriptRoot\clean.ps1"
-        Write-Host "Overrides removed." -f DarkGreen
-    } else {
-        Write-Output "If you change your mind later you can run 'concfg clean' to remove overrides."
-    }
-
-    $yn = Read-Host "`nWould you like to open a new console to see the changes? (Y/n)"
-    if (!$yn -or ($yn -like 'y*')) {
         if ($PSVersionTable.PSEdition -eq 'Core') {
             Start-Process "$PSHOME\pwsh.exe" -ArgumentList "-NoLogo"
         } else {
             Start-Process "powershell.exe" -ArgumentList "-NoLogo"
+        }
+    } else {
+        $yn = Read-Host "Overrides in the registry and shortcut files might interfere with your concfg settings. Would you like to find and remove them? (Y/n)"
+        if (!$yn -or ($yn -like 'y*')) {
+            & "$PSScriptRoot\clean.ps1"
+        } else {
+            Write-Output "If you change your mind later you can run 'concfg clean' to remove overrides."
+        }
+
+        $yn = Read-Host "`nWould you like to open a new console to see the changes? (Y/n)"
+        if (!$yn -or ($yn -like 'y*')) {
+            if ($PSVersionTable.PSEdition -eq 'Core') {
+                Start-Process "$PSHOME\pwsh.exe" -ArgumentList "-NoLogo"
+            } else {
+                Start-Process "powershell.exe" -ArgumentList "-NoLogo"
+            }
         }
     }
 } else {
