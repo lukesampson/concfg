@@ -1,205 +1,385 @@
-# Automated Screenshots of included Presets
+# Automated Screenshots of concfg built-in Presets
 
 
 ## 3024
 
 ![3024](./3024.png "3024")
 
-## 3024.light
+## apathy
 
-![3024.light](./3024.light.png "3024.light")
+![apathy](./apathy.png "apathy")
 
-## Seoul256
+## ashes
 
-![Seoul256](./Seoul256.png "Seoul256")
+![ashes](./ashes.png "ashes")
 
-## atelierdune
+## atelier-cave
 
-![atelierdune](./atelierdune.png "atelierdune")
+![atelier-cave](./atelier-cave.png "atelier-cave")
 
-## atelierdune.light
+## atelier-cave-light
 
-![atelierdune.light](./atelierdune.light.png "atelierdune.light")
+![atelier-cave-light](./atelier-cave-light.png "atelier-cave-light")
 
-## atelierforest
+## atelier-dune
 
-![atelierforest](./atelierforest.png "atelierforest")
+![atelier-dune](./atelier-dune.png "atelier-dune")
 
-## atelierforest.light
+## atelier-dune-light
 
-![atelierforest.light](./atelierforest.light.png "atelierforest.light")
+![atelier-dune-light](./atelier-dune-light.png "atelier-dune-light")
 
-## atelierheath
+## atelier-estuary
 
-![atelierheath](./atelierheath.png "atelierheath")
+![atelier-estuary](./atelier-estuary.png "atelier-estuary")
 
-## atelierheath.light
+## atelier-estuary-light
 
-![atelierheath.light](./atelierheath.light.png "atelierheath.light")
+![atelier-estuary-light](./atelier-estuary-light.png "atelier-estuary-light")
 
-## atelierlakeside
+## atelier-forest
 
-![atelierlakeside](./atelierlakeside.png "atelierlakeside")
+![atelier-forest](./atelier-forest.png "atelier-forest")
 
-## atelierlikeside.light
+## atelier-forest-light
 
-![atelierlikeside.light](./atelierlikeside.light.png "atelierlikeside.light")
+![atelier-forest-light](./atelier-forest-light.png "atelier-forest-light")
 
-## atelierseaside
+## atelier-heath
 
-![atelierseaside](./atelierseaside.png "atelierseaside")
+![atelier-heath](./atelier-heath.png "atelier-heath")
 
-## atelierseaside.light
+## atelier-heath-light
 
-![atelierseaside.light](./atelierseaside.light.png "atelierseaside.light")
+![atelier-heath-light](./atelier-heath-light.png "atelier-heath-light")
+
+## atelier-lakeside
+
+![atelier-lakeside](./atelier-lakeside.png "atelier-lakeside")
+
+## atelier-lakeside-light
+
+![atelier-lakeside-light](./atelier-lakeside-light.png "atelier-lakeside-light")
+
+## atelier-plateau
+
+![atelier-plateau](./atelier-plateau.png "atelier-plateau")
+
+## atelier-plateau-light
+
+![atelier-plateau-light](./atelier-plateau-light.png "atelier-plateau-light")
+
+## atelier-savanna
+
+![atelier-savanna](./atelier-savanna.png "atelier-savanna")
+
+## atelier-savanna-light
+
+![atelier-savanna-light](./atelier-savanna-light.png "atelier-savanna-light")
+
+## atelier-seaside
+
+![atelier-seaside](./atelier-seaside.png "atelier-seaside")
+
+## atelier-seaside-light
+
+![atelier-seaside-light](./atelier-seaside-light.png "atelier-seaside-light")
+
+## atelier-sulphurpool
+
+![atelier-sulphurpool](./atelier-sulphurpool.png "atelier-sulphurpool")
+
+## atelier-sulphurpool-light
+
+![atelier-sulphurpool-light](./atelier-sulphurpool-light.png "atelier-sulphurpool-light")
+
+## back-to-the-code
+
+![back-to-the-code](./back-to-the-code.png "back-to-the-code")
 
 ## bespin
 
 ![bespin](./bespin.png "bespin")
 
-## bespin.light
-
-![bespin.light](./bespin.light.png "bespin.light")
-
-## big
-
-![big](./big.png "big")
-
 ## bombyx
 
 ![bombyx](./bombyx.png "bombyx")
+
+## brewer
+
+![brewer](./brewer.png "brewer")
+
+## bright
+
+![bright](./bright.png "bright")
+
+## brushtrees
+
+![brushtrees](./brushtrees.png "brushtrees")
+
+## brushtrees-dark
+
+![brushtrees-dark](./brushtrees-dark.png "brushtrees-dark")
 
 ## chalk
 
 ![chalk](./chalk.png "chalk")
 
-## chalk.light
+## circus
 
-![chalk.light](./chalk.light.png "chalk.light")
+![circus](./circus.png "circus")
 
-## defaults
+## classic-dark
 
-![defaults](./defaults.png "defaults")
+![classic-dark](./classic-dark.png "classic-dark")
+
+## classic-light
+
+![classic-light](./classic-light.png "classic-light")
+
+## cmd-default
+
+![cmd-default](./cmd-default.png "cmd-default")
+
+## cmd-legacy
+
+![cmd-legacy](./cmd-legacy.png "cmd-legacy")
+
+## codeschool
+
+![codeschool](./codeschool.png "codeschool")
+
+## cupcake
+
+![cupcake](./cupcake.png "cupcake")
+
+## cupertino
+
+![cupertino](./cupertino.png "cupertino")
+
+## darktooth
+
+![darktooth](./darktooth.png "darktooth")
+
+## default-dark
+
+![default-dark](./default-dark.png "default-dark")
+
+## default-light
+
+![default-light](./default-light.png "default-light")
+
+## dracula
+
+![dracula](./dracula.png "dracula")
 
 ## eighties
 
 ![eighties](./eighties.png "eighties")
 
-## eighties.light
+## embers
 
-![eighties.light](./eighties.light.png "eighties.light")
+![embers](./embers.png "embers")
 
 ## flat
 
 ![flat](./flat.png "flat")
 
-## grayscale
+## github
 
-![grayscale](./grayscale.png "grayscale")
+![github](./github.png "github")
 
-## grayscale.light
+## google-dark
 
-![grayscale.light](./grayscale.light.png "grayscale.light")
+![google-dark](./google-dark.png "google-dark")
+
+## google-light
+
+![google-light](./google-light.png "google-light")
+
+## grayscale-dark
+
+![grayscale-dark](./grayscale-dark.png "grayscale-dark")
+
+## grayscale-light
+
+![grayscale-light](./grayscale-light.png "grayscale-light")
 
 ## greenscreen
 
 ![greenscreen](./greenscreen.png "greenscreen")
 
-## greenscreen.light
+## gruvbox-dark-hard
 
-![greenscreen.light](./greenscreen.light.png "greenscreen.light")
+![gruvbox-dark-hard](./gruvbox-dark-hard.png "gruvbox-dark-hard")
+
+## gruvbox-dark-medium
+
+![gruvbox-dark-medium](./gruvbox-dark-medium.png "gruvbox-dark-medium")
+
+## gruvbox-dark-pale
+
+![gruvbox-dark-pale](./gruvbox-dark-pale.png "gruvbox-dark-pale")
+
+## gruvbox-dark-soft
+
+![gruvbox-dark-soft](./gruvbox-dark-soft.png "gruvbox-dark-soft")
+
+## gruvbox-light-hard
+
+![gruvbox-light-hard](./gruvbox-light-hard.png "gruvbox-light-hard")
+
+## gruvbox-light-medium
+
+![gruvbox-light-medium](./gruvbox-light-medium.png "gruvbox-light-medium")
+
+## gruvbox-light-soft
+
+![gruvbox-light-soft](./gruvbox-light-soft.png "gruvbox-light-soft")
+
+## harmonic-dark
+
+![harmonic-dark](./harmonic-dark.png "harmonic-dark")
+
+## harmonic-light
+
+![harmonic-light](./harmonic-light.png "harmonic-light")
+
+## hopscotch
+
+![hopscotch](./hopscotch.png "hopscotch")
+
+## icy
+
+![icy](./icy.png "icy")
+
+## irblack
+
+![irblack](./irblack.png "irblack")
 
 ## isotope
 
 ![isotope](./isotope.png "isotope")
 
-## isotope.light
+## macintosh
 
-![isotope.light](./isotope.light.png "isotope.light")
-
-## londontube
-
-![londontube](./londontube.png "londontube")
-
-## londontube.light
-
-![londontube.light](./londontube.light.png "londontube.light")
+![macintosh](./macintosh.png "macintosh")
 
 ## marrakesh
 
 ![marrakesh](./marrakesh.png "marrakesh")
 
-## marrakesh.light
+## materia
 
-![marrakesh.light](./marrakesh.light.png "marrakesh.light")
+![materia](./materia.png "materia")
 
-## medium
+## material
 
-![medium](./medium.png "medium")
+![material](./material.png "material")
+
+## material-darker
+
+![material-darker](./material-darker.png "material-darker")
+
+## material-lighter
+
+![material-lighter](./material-lighter.png "material-lighter")
+
+## material-palenight
+
+![material-palenight](./material-palenight.png "material-palenight")
+
+## mellow-purple
+
+![mellow-purple](./mellow-purple.png "mellow-purple")
+
+## mexico-light
+
+![mexico-light](./mexico-light.png "mexico-light")
 
 ## mocha
 
 ![mocha](./mocha.png "mocha")
 
-## mocha.light
-
-![mocha.light](./mocha.light.png "mocha.light")
-
 ## monokai
 
 ![monokai](./monokai.png "monokai")
 
-## monokai.light
+## nord
 
-![monokai.light](./monokai.light.png "monokai.light")
-
-## mountain
-
-![mountain](./mountain.png "mountain")
+![nord](./nord.png "nord")
 
 ## ocean
 
 ![ocean](./ocean.png "ocean")
 
-## ocean.light
-
-![ocean.light](./ocean.light.png "ocean.light")
-
 ## oceanicnext
 
 ![oceanicnext](./oceanicnext.png "oceanicnext")
+
+## one-light
+
+![one-light](./one-light.png "one-light")
+
+## onedark
+
+![onedark](./onedark.png "onedark")
+
+## outrun-dark
+
+![outrun-dark](./outrun-dark.png "outrun-dark")
 
 ## paraiso
 
 ![paraiso](./paraiso.png "paraiso")
 
-## paraiso.light
+## phd
 
-![paraiso.light](./paraiso.light.png "paraiso.light")
+![phd](./phd.png "phd")
 
-## powershell-defaults
+## pico
 
-![powershell-defaults](./powershell-defaults.png "powershell-defaults")
+![pico](./pico.png "pico")
+
+## pop
+
+![pop](./pop.png "pop")
+
+## porple
+
+![porple](./porple.png "porple")
+
+## powershell-default
+
+![powershell-default](./powershell-default.png "powershell-default")
+
+## powershell-legacy
+
+![powershell-legacy](./powershell-legacy.png "powershell-legacy")
 
 ## railscasts
 
 ![railscasts](./railscasts.png "railscasts")
 
-## railscasts.light
+## rebecca
 
-![railscasts.light](./railscasts.light.png "railscasts.light")
+![rebecca](./rebecca.png "rebecca")
 
-## shapshifter
+## seoul256
 
-![shapshifter](./shapshifter.png "shapshifter")
+![seoul256](./seoul256.png "seoul256")
 
-## shapshifter.light
+## seti
 
-![shapshifter.light](./shapshifter.light.png "shapshifter.light")
+![seti](./seti.png "seti")
 
-## small
+## shapeshifter
 
-![small](./small.png "small")
+![shapeshifter](./shapeshifter.png "shapeshifter")
+
+## solarflare
+
+![solarflare](./solarflare.png "solarflare")
 
 ## solarized-dark
 
@@ -209,38 +389,58 @@
 
 ![solarized-light](./solarized-light.png "solarized-light")
 
+## spacemacs
+
+![spacemacs](./spacemacs.png "spacemacs")
+
+## summerfruit-dark
+
+![summerfruit-dark](./summerfruit-dark.png "summerfruit-dark")
+
+## summerfruit-light
+
+![summerfruit-light](./summerfruit-light.png "summerfruit-light")
+
 ## tomorrow
 
 ![tomorrow](./tomorrow.png "tomorrow")
 
-## tomorrow.light
+## tomorrow-night
 
-![tomorrow.light](./tomorrow.light.png "tomorrow.light")
+![tomorrow-night](./tomorrow-night.png "tomorrow-night")
+
+## tube
+
+![tube](./tube.png "tube")
 
 ## twilight
 
 ![twilight](./twilight.png "twilight")
 
-## twilight.light
+## ubuntu
 
-![twilight.light](./twilight.light.png "twilight.light")
+![ubuntu](./ubuntu.png "ubuntu")
 
+## unikitty-dark
 
-# Generate Windows to perform Screenshots
+![unikitty-dark](./unikitty-dark.png "unikitty-dark")
 
-1. Open powershell and navigate to the directory that contains `outcolors.ps1` and `theme-output-comparison.ps1`.
-2. execute `theme-output-comparison.ps1` 
-3. Wait for all presets to finish.
-4. Take screenshots of each screen cropping out prompt.
+## unikitty-light
 
-# Generating README
+![unikitty-light](./unikitty-light.png "unikitty-light")
 
-## requirements
+## vs-code-dark-plus
 
-1. python 3.5
-2. jinja2
+![vs-code-dark-plus](./vs-code-dark-plus.png "vs-code-dark-plus")
 
-## generation
+## woodland
 
-1. open terminal to folder containing all images.
-2. run `python gen_readme.py`
+![woodland](./woodland.png "woodland")
+
+## xcode-dusk
+
+![xcode-dusk](./xcode-dusk.png "xcode-dusk")
+
+## zenburn
+
+![zenburn](./zenburn.png "zenburn")
