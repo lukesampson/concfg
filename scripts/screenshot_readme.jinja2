@@ -1,0 +1,7 @@
+# Automated Screenshots of concfg built-in Presets
+
+{% for image in images %}
+## {{ image.name }}
+
+![{{ image.name }}](./{{ image.path }} "{{ image.name }}")
+{% endfor %}

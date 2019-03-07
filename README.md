@@ -12,11 +12,11 @@ If you have [Scoop](https://scoop.sh), you can install concfg with `scoop instal
 * PowerShell's syntax highlighting isn't compatible with Base16's conventions by default. To set syntax highlighting to colors consistent with Base16's conventions,
 use `concfg tokencolor` sub-command to modify the syntax highlighting colors.
 
-[Screenshots of included presets](./preset_examples/README.md)
+[Screenshots of built-in presets](preset_examples/README.md)
 
 ## Usage
 
-### Use built-in presets
+### Using built-in presets
 
 1. Use a color scheme, for example use the [Solarized](http://ethanschoonover.com/solarized) dark color presets:
 
@@ -38,17 +38,29 @@ You can also import multiple presets once, the later sources will override setti
 concfg import solarized-dark basic
 ```
 
-3. If you want to revert to the stock-standard console color preset:
+3. If you want to revert to the default cmd color preset:
 
 ```
-concfg import windows-console-defaults
+concfg import cmd-default
+```
+
+Or the default powershell color preset:
+
+```
+concfg import powershell-default
 ```
 
 **Note**: Since concfg will clean all program- or shortcut-specific settings
 stored in the registry or in the .lnk file. So when you import a color preset,
 all console applications (cmd.exe/powershell.exe) will use the same preset.
-You can not set cmd.exe to use windows-console-defaults while set powershell
-to use powershell-defaults.
+You can not set cmd.exe to use `cmd-default` while set powershell
+to use `powershell-default`. That means when you import `powershell-default`,
+your cmd.exe will also become powershell-blue. This is a known issue and proper behavior.
+
+There are two default cmd color presets `cmd-default` and `cmd-legacy`,
+please read [this article](https://blogs.msdn.microsoft.com/commandline/2017/08/02/updating-the-windows-console-colors/)
+to see the difference. And because of this, there are also two default
+powershell presets `powershell-default` and `powershell-legacy`.
 
 ### Importing settings from a URL
 
