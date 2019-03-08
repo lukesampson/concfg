@@ -305,6 +305,10 @@
 
 ![monokai](./monokai.png "monokai")
 
+## mountain
+
+![mountain](./mountain.png "mountain")
+
 ## nord
 
 ![nord](./nord.png "nord")
