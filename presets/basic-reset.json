@@ -1,0 +1,15 @@
+{
+    "font_face": "",
+    "font_true_type": false,
+    "font_size": "0x14",
+    "font_weight": 0,
+    "cursor_size": "small",
+    "window_size": "80x25",
+    "screen_buffer_size": "80x200",
+    "command_history_length": 50,
+    "num_history_buffers": 4,
+    "quick_edit": true,
+    "insert_mode": true,
+    "fullscreen": false,
+    "load_console_IME": true
+}

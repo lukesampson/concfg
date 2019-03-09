@@ -24,7 +24,7 @@ LEGACY_PWSH = False
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 PRESETS_DIR = os.path.join(SCRIPT_DIR, os.pardir, 'presets')
 PRESET_EXAMPLES_DIR = os.path.join(SCRIPT_DIR, os.pardir, 'preset_examples')
-SKIP_LIST = ['basic']
+SKIP_LIST = ['basic', 'basic-reset']
 
 
 def get_hwnds_for_pid(pid):
