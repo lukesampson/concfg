@@ -74,82 +74,90 @@ function disable($non_interactive) {
     resettokencolor $non_interactive
 }
 
+function getpsreadline($non_interactive) {
+    # Return already imported PSReadLine module
+    $psreadline = Get-Module -Name 'PSReadLine'
+    if ($psreadline) {
+        return $psreadline
+    }
+
+    # Try to find PSReadLine when not yet imported (potentially slow!)
+    $psreadline = Get-Module -Name 'PSReadLine' -ListAvailable
+    if ($psreadline) {
+        return $psreadline
+    }
+
+    if (!$non_interactive) {
+        Write-Output 'ERROR: The PSReadLine module is required to use token colors.'
+    }
+
+    exit 1
+}
+
 function settokencolor($non_interactive) {
-    if (!(Get-Module -ListAvailable -Name "PSReadline")) {
-        if(!$non_interactive) {
-            Write-Output "ERROR: you have to install PSReadline to use token colors"
-        }
-        exit 1
+    $psreadline = getpsreadline $non_interactive
+
+    # PSReadLine 1
+    if ($psreadline.Version.Major -eq 1) {
+        # Reset
+        Set-PSReadlineOption -ResetTokenColors
+
+        $options = Get-PSReadlineOption
+        # Token Foreground                                # base16 colors
+        $options.CommandForegroundColor   = "DarkBlue"    # base0D
+        $options.CommentForegroundColor   = "Yellow"      # base03
+        $options.KeywordForegroundColor   = "DarkMagenta" # base0E
+        $options.MemberForegroundColor    = "DarkBlue"    # base0D
+        $options.NumberForegroundColor    = "Red"         # base09
+        $options.OperatorForegroundColor  = "DarkCyan"    # base0C
+        $options.ParameterForegroundColor = "Red"         # base09
+        $options.StringForegroundColor    = "DarkGreen"   # base0B
+        $options.TypeForegroundColor      = "DarkYellow"  # base0A
+        $options.VariableForegroundColor  = "DarkRed"     # base08
     } else {
-        # PSReadLine 1
-        if ((Get-Module -ListAvailable -Name "PSReadline").Version.Major -eq 1) {
-            # Reset
-            Set-PSReadlineOption -ResetTokenColors
-
-            $options = Get-PSReadlineOption
-            # Token Foreground                                # base16 colors
-            $options.CommandForegroundColor   = "DarkBlue"    # base0D
-            $options.CommentForegroundColor   = "Yellow"      # base03
-            $options.KeywordForegroundColor   = "DarkMagenta" # base0E
-            $options.MemberForegroundColor    = "DarkBlue"    # base0D
-            $options.NumberForegroundColor    = "Red"         # base09
-            $options.OperatorForegroundColor  = "DarkCyan"    # base0C
-            $options.ParameterForegroundColor = "Red"         # base09
-            $options.StringForegroundColor    = "DarkGreen"   # base0B
-            $options.TypeForegroundColor      = "DarkYellow"  # base0A
-            $options.VariableForegroundColor  = "DarkRed"     # base08
-        } else {
-            # Token Foreground                                # base16 colors
-            Set-PSReadLineOption -Colors @{
-                "Command"   = [ConsoleColor]::DarkBlue        # base0D
-                "Comment"   = [ConsoleColor]::Yellow          # base03
-                "Keyword"   = [ConsoleColor]::DarkMagenta     # base0E
-                "Member"    = [ConsoleColor]::DarkBlue        # base0D
-                "Number"    = [ConsoleColor]::Red             # base09
-                "Operator"  = [ConsoleColor]::DarkCyan        # base0C
-                "Parameter" = [ConsoleColor]::Red             # base09
-                "String"    = [ConsoleColor]::DarkGreen       # base0B
-                "Type"      = [ConsoleColor]::DarkYellow      # base0A
-                "Variable"  = [ConsoleColor]::DarkRed         # base08
-            }
+        # Token Foreground                                # base16 colors
+        Set-PSReadLineOption -Colors @{
+            "Command"   = [ConsoleColor]::DarkBlue        # base0D
+            "Comment"   = [ConsoleColor]::Yellow          # base03
+            "Keyword"   = [ConsoleColor]::DarkMagenta     # base0E
+            "Member"    = [ConsoleColor]::DarkBlue        # base0D
+            "Number"    = [ConsoleColor]::Red             # base09
+            "Operator"  = [ConsoleColor]::DarkCyan        # base0C
+            "Parameter" = [ConsoleColor]::Red             # base09
+            "String"    = [ConsoleColor]::DarkGreen       # base0B
+            "Type"      = [ConsoleColor]::DarkYellow      # base0A
+            "Variable"  = [ConsoleColor]::DarkRed         # base08
         }
+    }
 
-        if (!$non_interactive) {
-            Write-Output "concfg tokencolor enabled."
-        }
+    if (!$non_interactive) {
+        Write-Output "concfg tokencolor enabled."
     }
 }
 
 function resettokencolor($non_interactive) {
-    if (!(Get-Module -ListAvailable -Name "PSReadline")) {
-        if(!$non_interactive) {
-            Write-Output "ERROR: you have to install PSReadline to use token colors"
-        }
-        exit 1
+    # PSReadLine 1
+    if ($psreadline.Version.Major -eq 1) {
+        # Reset
+        Set-PSReadlineOption -ResetTokenColors
     } else {
-        # PSReadLine 1
-        if ((Get-Module -ListAvailable -Name "PSReadline").Version.Major -eq 1) {
-            # Reset
-            Set-PSReadlineOption -ResetTokenColors
-        } else {
-            # Default Colors
-            Set-PSReadLineOption -Colors @{
-                "Command"   = [ConsoleColor]::Yellow
-                "Comment"   = [ConsoleColor]::DarkGreen
-                "Keyword"   = [ConsoleColor]::Green
-                "Member"    = [ConsoleColor]::White
-                "Number"    = [ConsoleColor]::White
-                "Operator"  = [ConsoleColor]::DarkGray
-                "Parameter" = [ConsoleColor]::DarkGray
-                "String"    = [ConsoleColor]::DarkCyan
-                "Type"      = [ConsoleColor]::Gray
-                "Variable"  = [ConsoleColor]::Green
-            }
+        # Default Colors
+        Set-PSReadLineOption -Colors @{
+            "Command"   = [ConsoleColor]::Yellow
+            "Comment"   = [ConsoleColor]::DarkGreen
+            "Keyword"   = [ConsoleColor]::Green
+            "Member"    = [ConsoleColor]::White
+            "Number"    = [ConsoleColor]::White
+            "Operator"  = [ConsoleColor]::DarkGray
+            "Parameter" = [ConsoleColor]::DarkGray
+            "String"    = [ConsoleColor]::DarkCyan
+            "Type"      = [ConsoleColor]::Gray
+            "Variable"  = [ConsoleColor]::Green
         }
+    }
 
-        if (!$non_interactive) {
-            Write-Output "concfg tokencolor disabled."
-        }
+    if (!$non_interactive) {
+        Write-Output "concfg tokencolor disabled."
     }
 }
 
