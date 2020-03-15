@@ -114,6 +114,8 @@ function settokencolor($non_interactive) {
         $options.StringForegroundColor    = "DarkGreen"   # base0B
         $options.TypeForegroundColor      = "DarkYellow"  # base0A
         $options.VariableForegroundColor  = "DarkRed"     # base08
+        $options.EmphasisForegroundColor  = "DarkCyan"    # base0C
+        $options.ErrorForegroundColor     = "DarkRed"     # base08
     } else {
         # Token Foreground                                # base16 colors
         Set-PSReadLineOption -Colors @{
@@ -127,6 +129,8 @@ function settokencolor($non_interactive) {
             "String"    = [ConsoleColor]::DarkGreen       # base0B
             "Type"      = [ConsoleColor]::DarkYellow      # base0A
             "Variable"  = [ConsoleColor]::DarkRed         # base08
+            "Emphasis"  = [ConsoleColor]::DarkCyan        # base0C
+            "Error"     = [ConsoleColor]::DarkRed         # base08
         }
     }
 
@@ -142,6 +146,7 @@ function resettokencolor($non_interactive) {
         Set-PSReadlineOption -ResetTokenColors
     } else {
         # Default Colors
+        # https://github.com/PowerShell/PSReadLine/blob/599e1784a96d1acfce8d4d2a561c82b07920ada4/PSReadLine/Cmdlets.cs#L68-L79
         Set-PSReadLineOption -Colors @{
             "Command"   = [ConsoleColor]::Yellow
             "Comment"   = [ConsoleColor]::DarkGreen
@@ -153,6 +158,8 @@ function resettokencolor($non_interactive) {
             "String"    = [ConsoleColor]::DarkCyan
             "Type"      = [ConsoleColor]::Gray
             "Variable"  = [ConsoleColor]::Green
+            "Emphasis"  = [ConsoleColor]::Cyan
+            "Error"     = [ConsoleColor]::Red
         }
     }
 
