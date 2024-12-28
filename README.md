@@ -1,20 +1,22 @@
 # concfg
 
+[![license][license-badge]](LICENSE) [![screenshots-svg]][screenshots-url] [![edit-online-svg]][edit-online-url]
+
 `concfg` is a utility to import and export Windows console settings like fonts and colors.
 
-### Important Caveats
-* Console settings can be overridden by program- or shortcut-specific
-settings stored in the registry or in the .lnk file itself. Concfg can
-attempt to clean these up for you by removing registry settings that
-might conflict and removing console properties from .lnk files in known
-directories. `concfg import` will prompt you to clean these up after
-an import, or you can run `concfg clean` at any time.
-* PowerShell's syntax highlighting isn't compatible with Base16's
-conventions by default. To set syntax highlighting to colors
-consistent with Base16's conventions, use `concfg tokencolor`
-sub-command to modify the syntax highlighting colors.
-
-### [Screenshots of built-in presets](preset_examples/README.md) and [You Can Preview and Edit Themes Here!](http://github.mindzgroup.com/concfg)
+> [!IMPORTANT]
+>
+> * Console settings can be overridden by program- or shortcut-specific
+> settings stored in the registry or in the .lnk file itself. Concfg can
+> attempt to clean these up for you by removing registry settings that
+> might conflict and removing console properties from .lnk files in known
+> directories. `concfg import` will prompt you to clean these up after
+> an import, or you can run `concfg clean` at any time.
+>
+> * PowerShell's syntax highlighting isn't compatible with Base16's
+> conventions by default. To set syntax highlighting to colors
+> consistent with Base16's conventions, use `concfg tokencolor`
+> sub-command to modify the syntax highlighting colors.
 
 ## Install
 
@@ -120,6 +122,7 @@ concfg export <path>
 Type `concfg` without parameters to see the usage info.
 
 ## Credits
+
 Thanks to Stephen Edgar([@ntwb](https://github.com/ntwb)) for adding support
 for [Chris Kempson](http://chriskempson.com/)'s
 [base16](http://chriskempson.com/projects/base16/) color settings.
@@ -133,3 +136,9 @@ Concfg uses Ethan Schoonover's [Solarized](http://ethanschoonover.com/solarized)
 ## License
 
 MIT
+
+[license-badge]: https://img.shields.io/github/license/lukesampson/concfg?style=flat&logo=spdx
+[screenshots-svg]: https://img.shields.io/badge/Preview-Screenshots-0067B8.svg?style=flat&logo=githubpages
+[screenshots-url]: preset_examples/README.md
+[edit-online-svg]: https://img.shields.io/badge/Edit-Online-0067B8.svg?style=flat&logo=githubpages
+[edit-online-url]: https://chawyehsu.github.io/concfg/
