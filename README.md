@@ -20,7 +20,7 @@
 
 ## Install
 
-If you have [Scoop](https://scoop.sh), you can install concfg with:
+If you have [Scoop], you can install concfg with:
 
 ```
 scoop install concfg
@@ -33,7 +33,7 @@ and add `bin\concfg.ps1` to your PATH.
 
 ### Using built-in presets
 
-1. Use a color scheme, for example use the [Solarized](http://ethanschoonover.com/solarized) dark color presets:
+1. Use a color scheme, for example use the [Solarized] dark color presets:
 
 ```
 concfg import solarized-dark
@@ -97,9 +97,8 @@ to use `powershell-default`. That means when you import `powershell-default`,
 your cmd.exe will also become powershell-blue. This is a known issue and proper behavior.
 
 There are two default cmd color presets `cmd-default` and `cmd-legacy`,
-please read [this article](https://blogs.msdn.microsoft.com/commandline/2017/08/02/updating-the-windows-console-colors/)
-to see the difference. And because of this, there are also two default
-powershell presets `powershell-default` and `powershell-legacy`.
+please read [this article] to see the difference. And because of this, there are
+also two default powershell presets `powershell-default` and `powershell-legacy`.
 
 ### Importing settings from a URL
 
@@ -123,15 +122,11 @@ Type `concfg` without parameters to see the usage info.
 
 ## Credits
 
-Thanks to Stephen Edgar([@ntwb](https://github.com/ntwb)) for adding support
-for [Chris Kempson](http://chriskempson.com/)'s
-[base16](http://chriskempson.com/projects/base16/) color settings.
-
-Thanks to [Anant Anand Gupta](https://about.me/anantanandgupta)
-and [MindzGroup Technologies](http://github.mindzgroup.com)
-for the online preview and edit website.
-
-Concfg uses Ethan Schoonover's [Solarized](http://ethanschoonover.com/solarized) color theme.
+* Thanks to [Stephen Edgar] for adding support for [Chris Kempson]'s [base16] color
+settings.
+* Thanks to [Anant Anand Gupta] and MindzGroup Technologies for the online preview
+and edit website.
+* Concfg uses Ethan Schoonover's [Solarized] color theme.
 
 ## License
 
@@ -142,3 +137,10 @@ MIT
 [screenshots-url]: preset_examples/README.md
 [edit-online-svg]: https://img.shields.io/badge/Edit-Online-0067B8.svg?style=flat&logo=githubpages
 [edit-online-url]: https://chawyehsu.github.io/concfg/
+[Scoop]: https://scoop.sh/
+[Solarized]: https://ethanschoonover.com/solarized/
+[this article]: https://blogs.msdn.microsoft.com/commandline/2017/08/02/updating-the-windows-console-colors/
+[Stephen Edgar]: https://github.com/ntwb
+[Chris Kempson]: https://github.com/chriskempson
+[base16]: https://github.com/chriskempson/base16
+[Anant Anand Gupta]: https://github.com/anantanandgupta
