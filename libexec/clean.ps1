@@ -12,10 +12,15 @@
 function Clear-AllOverride {
     # 1. clean console registry
     if (Test-Path 'HKCU:\Console') {
-        Get-ChildItem 'HKCU:\Console' | ForEach-Object {
-            Write-Output "Removing 'Registry::$($_.Name)'"
-            Remove-Item "Registry::$($_.Name)"
-        }
+        # The "%%Startup" key isn't a true console settings profile. It's used
+        # on modern Windows releases to store the user's preference for the
+        # default terminal for hosting command-line apps.
+        Get-ChildItem 'HKCU:\Console' |
+            Where-Object PSChildName -ne '%%Startup' |
+            ForEach-Object {
+                Write-Output "Removing 'Registry::$($_.Name)'"
+                Remove-Item "Registry::$($_.Name)"
+            }
     }
 
     # 2. clean powershell .lnk files
